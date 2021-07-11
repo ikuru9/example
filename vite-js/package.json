@@ -1,0 +1,56 @@
+{
+  "name": "next-js",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview",
+    "lint:script": "eslint --ext \".js,.jsx,.vue,.ts,.tsx\" --ignore-path .gitignore .",
+    "lint:style": "stylelint src/**/*.{css,scss,vue} --ignore-path .gitignore",
+    "lint": "yarn lint:script && yarn lint:style"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.10",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "@vitejs/plugin-vue": "^1.2.4",
+    "@vitejs/plugin-vue-jsx": "^1.1.6",
+    "@vue/compiler-sfc": "^3.0.5",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^7.0.0",
+    "eslint": "^7.30.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-vue": "^7.13.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.0.0",
+    "msw": "^0.30.1",
+    "prettier": "^2.3.2",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-standard": "^22.0.0",
+    "typescript": "^4.3.2",
+    "vite": "^2.4.0",
+    "vite-plugin-pages": "^0.14.9",
+    "vue-tsc": "^0.0.24"
+  },
+  "msw": {
+    "workerDirectory": "public"
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue,ts,tsx}": "eslint",
+    "*.{css,scss,vue}": "stylelint"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  }
+}

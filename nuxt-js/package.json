@@ -1,0 +1,74 @@
+{
+  "name": "vite-js",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "local": "cross-env NODE_ENV=local nuxt",
+    "dev": "cross-env NODE_ENV=development nuxt",
+    "prod": "cross-env NODE_ENV=production nuxt",
+    "build:dev": "cross-env NODE_ENV=development nuxt build",
+    "build:prod": "cross-env NODE_ENV=production nuxt build",
+    "generate": "nuxt generate",
+    "start:dev": "cross-env NODE_ENV=development nuxt start",
+    "start:prod": "cross-env NODE_ENV=production nuxt start",
+    "export:dev": "cross-env NODE_ENV=development nuxt export",
+    "export:prod": "cross-env NODE_ENV=production nuxt export",
+    "serve:dev": "cross-env NODE_ENV=development nuxt serve",
+    "serve:prod": "cross-env NODE_ENV=production nuxt serve",
+    "lint:script": "eslint --ext \".js,.jsx,.vue,.ts,.tsx\" --ignore-path .gitignore .",
+    "lint:style": "stylelint src/**/*.{css,scss,vue} --ignore-path .gitignore",
+    "lint": "yarn lint:script && yarn lint:style",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/pwa": "^3.3.5",
+    "@vue/composition-api": "^1.0.0-rc.13",
+    "core-js": "^3.15.1",
+    "nuxt": "^2.15.7"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.14.7",
+    "@commitlint/cli": "^12.0.1",
+    "@commitlint/config-conventional": "^12.0.1",
+    "@nuxt/types": "^2.15.7",
+    "@nuxt/typescript-build": "^2.1.0",
+    "@nuxtjs/eslint-config-typescript": "^6.0.1",
+    "@nuxtjs/eslint-module": "^3.0.2",
+    "@nuxtjs/stylelint-module": "^4.0.0",
+    "@nuxtjs/vuetify": "^1.11.3",
+    "@vue/test-utils": "^1.2.1",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^27.0.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-nuxt": "^2.0.0",
+    "eslint-plugin-vue": "^7.12.1",
+    "husky": "^7.0.1",
+    "jest": "^27.0.5",
+    "lint-staged": "^10.5.4",
+    "msw": "^0.30.1",
+    "nuxt-property-decorator": "^2.9.1",
+    "prettier": "^2.3.2",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-standard": "^22.0.0",
+    "ts-jest": "^27.0.3",
+    "vue-jest": "^3.0.4"
+  },
+  "msw": {
+    "workerDirectory": "src\\static"
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue,ts,tsx}": "eslint",
+    "*.{css,scss,vue}": "stylelint"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  }
+}

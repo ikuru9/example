@@ -1,19 +1,29 @@
 import {
   Action,
+  Policies,
   Policy,
   Role,
   RoleType,
-  Policies,
-} from '/@/utils/permission/types'
-import DEFAULT_POLICES from '/@/polices'
+} from '@/plugins/permission/types'
+import DEFAULT_POLICES from '@/polices'
+
+export interface IPermission {
+  setPolicies(policies: Policies): void
+  getPermission(path: string, roleTypes: Array<RoleType>): Policy | undefined
+  hasActionPermission(
+    path: string,
+    roleTypes: Array<RoleType>,
+    action: string
+  ): boolean
+}
 
 /**
  * 권한 관리
  *
- * route name 를 key로 사용하여 권한을 관리
+ * route path 를 key로 사용하여 권한을 관리
  * redirect url 은 @/pages/* components 에 설정
  */
-export default class Permission {
+export default class Permission implements IPermission {
   protected policies: Policies
 
   constructor(policies: Policies = DEFAULT_POLICES) {
@@ -25,7 +35,7 @@ export default class Permission {
   }
 
   public getPermission(
-    name: string,
+    path: string,
     roleTypes: Array<RoleType>
   ): Policy | undefined {
     if (this.isAdmin(roleTypes)) {
@@ -34,11 +44,11 @@ export default class Permission {
       }
     }
 
-    return this.getPolicy(this.policies, name.split('-'), roleTypes)
+    return this.getPolicy(this.policies, path.split('/'), roleTypes)
   }
 
   public hasActionPermission(
-    name: string,
+    path: string,
     roleTypes: Array<RoleType>,
     action: string
   ): boolean {
@@ -48,7 +58,7 @@ export default class Permission {
 
     const { actions, extraActions } = this.getPolicy(
       this.policies,
-      name.split('-'),
+      path.split('/'),
       roleTypes
     ) ?? { actions: undefined }
 
@@ -62,14 +72,14 @@ export default class Permission {
 
   private getPolicy(
     policies: Policies,
-    names: Array<string>,
+    paths: Array<string>,
     roleTypes: Array<RoleType>,
     sliceIndex: number = 0
   ): Policy | undefined {
     let result: Policy | undefined
 
-    const nameSize = names.length - 1
-    names.slice(sliceIndex).some((name, index) => {
+    const nameSize = paths.length - 1
+    paths.slice(sliceIndex).some((name, index) => {
       const policy = policies[name]
 
       if (!policy) {
@@ -84,7 +94,7 @@ export default class Permission {
       ) {
         const children = policy?.children
         if (children && nameSize > index) {
-          result = this.getPolicy(children, names, roleTypes, index - 1)
+          result = this.getPolicy(children, paths, roleTypes, index - 1)
           return true
         }
         roleTypes.some((roleType) => {

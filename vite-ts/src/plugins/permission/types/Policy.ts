@@ -1,4 +1,4 @@
-import { ActionType, RoleType } from '/@/utils/permission/types'
+import { ActionType, RoleType } from '@/plugins/permission/types'
 
 export interface Policy {
   actions: Array<ActionType>

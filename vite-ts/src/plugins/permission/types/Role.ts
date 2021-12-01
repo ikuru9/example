@@ -1,4 +1,4 @@
-import Union from '../../../../types/Union'
+import Union from '@/types/Union'
 
 export const Role = {
   ADMIN: 'ADMIN',

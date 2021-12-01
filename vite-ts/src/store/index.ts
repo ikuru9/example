@@ -12,7 +12,7 @@ export interface RootState {
 
 export const key: InjectionKey<VuexStore<RootState>> = Symbol()
 
-function useStore(): VuexStore<RootState> {
+export function useStore(): VuexStore<RootState> {
   return _useStore(key)
 }
 
@@ -35,5 +35,3 @@ export function createStore(): VuexStore<RootState> {
 
   return store
 }
-
-export default useStore()

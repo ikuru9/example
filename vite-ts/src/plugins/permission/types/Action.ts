@@ -1,10 +1,12 @@
-import Union from '../../../../types/Union'
+import Union from '@/types/Union'
 
+/**
+ * 권한 종류
+ */
 export const Action = {
   ALL: 'ALL',
-  REGISTER: 'REGISTER',
-  MODIFY: 'MODIFY',
+  SAVE: 'SAVE',
   REMOVE: 'REMOVE',
-} as const
+}
 
 export type ActionType = Union<typeof Action>

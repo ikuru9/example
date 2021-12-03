@@ -1,19 +1,22 @@
 import { ComponentPublicInstance, DirectiveBinding, Plugin } from 'vue'
 import Permission, { IPermission } from './Permission'
-import { RoleType } from './types'
+import { ActionType, RoleType } from './types'
 
-function checkPermission(el: HTMLElement, binding: DirectiveBinding<RoleType>) {
+function checkPermission(
+  el: HTMLElement,
+  binding: DirectiveBinding<ActionType | string>
+) {
   const { value, instance } = binding
   const {
     $permission,
     $store: { getters },
-    $route: { path },
+    $route,
   } = instance as ComponentPublicInstance
 
   if (value) {
     const roles: Array<RoleType> = getters['user/roles']
 
-    if (!$permission?.hasActionPermission(path, roles, value)) {
+    if (!$permission?.hasActionPermission($route, roles, value)) {
       el.parentNode && el.parentNode.removeChild(el)
     }
   } else {
@@ -23,7 +26,6 @@ function checkPermission(el: HTMLElement, binding: DirectiveBinding<RoleType>) {
 
 const permission: Plugin = {
   install(app, options?) {
-    // TODO: 권한 부여
     const permission = new Permission()
     app.config.globalProperties.$permission = permission
 

@@ -1,26 +1,31 @@
 import {
   Action,
+  ActionType,
   Policies,
   Policy,
   Role,
   RoleType,
 } from '@/plugins/permission/types'
 import DEFAULT_POLICES from '@/polices'
+import { RouteLocation } from 'vue-router'
 
 export interface IPermission {
   setPolicies(policies: Policies): void
-  getPermission(path: string, roleTypes: Array<RoleType>): Policy | undefined
+  getPermission(
+    route: RouteLocation,
+    roleTypes: Array<RoleType>
+  ): Policy | undefined
   hasActionPermission(
-    path: string,
+    route: RouteLocation,
     roleTypes: Array<RoleType>,
-    action: string
+    action: ActionType | string
   ): boolean
 }
 
 /**
  * 권한 관리
  *
- * route path 를 key로 사용하여 권한을 관리
+ * route name 를 key로 사용하여 권한을 관리
  * redirect url 은 @/pages/* components 에 설정
  */
 export default class Permission implements IPermission {
@@ -30,12 +35,22 @@ export default class Permission implements IPermission {
     this.policies = policies
   }
 
+  /**
+   * 권한 정책 설정
+   * @param policies 권한 정책
+   */
   public setPolicies(policies: Policies = DEFAULT_POLICES) {
     this.policies = policies
   }
 
+  /**
+   * 해당 route 의 권한 가져오기
+   * @param route
+   * @param roleTypes
+   * @returns
+   */
   public getPermission(
-    path: string,
+    route: RouteLocation,
     roleTypes: Array<RoleType>
   ): Policy | undefined {
     if (this.isAdmin(roleTypes)) {
@@ -44,13 +59,20 @@ export default class Permission implements IPermission {
       }
     }
 
-    return this.getPolicy(this.policies, path.split('/'), roleTypes)
+    return this.getPolicy(this.policies, route, roleTypes)
   }
 
+  /**
+   * 해당 route 의 Action 권한 존재 유무
+   * @param route
+   * @param roleTypes
+   * @param action
+   * @returns
+   */
   public hasActionPermission(
-    path: string,
+    route: RouteLocation,
     roleTypes: Array<RoleType>,
-    action: string
+    action: ActionType | string
   ): boolean {
     if (this.isAdmin(roleTypes)) {
       return true
@@ -58,7 +80,7 @@ export default class Permission implements IPermission {
 
     const { actions, extraActions } = this.getPolicy(
       this.policies,
-      path.split('/'),
+      route,
       roleTypes
     ) ?? { actions: undefined }
 
@@ -72,14 +94,16 @@ export default class Permission implements IPermission {
 
   private getPolicy(
     policies: Policies,
-    paths: Array<string>,
+    route: RouteLocation,
     roleTypes: Array<RoleType>,
     sliceIndex: number = 0
   ): Policy | undefined {
     let result: Policy | undefined
 
-    const nameSize = paths.length - 1
-    paths.slice(sliceIndex).some((name, index) => {
+    const names = (route.name ?? '').split('-')
+    const nameSize = names.length - 1
+
+    names.slice(sliceIndex).some((name, index) => {
       const policy = policies[name]
 
       if (!policy) {
@@ -94,7 +118,7 @@ export default class Permission implements IPermission {
       ) {
         const children = policy?.children
         if (children && nameSize > index) {
-          result = this.getPolicy(children, paths, roleTypes, index - 1)
+          result = this.getPolicy(children, route, roleTypes, index - 1)
           return true
         }
         roleTypes.some((roleType) => {

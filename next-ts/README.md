@@ -10,25 +10,19 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Git Contribution submission specification
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `feat` 새로운 기능을 추가
+- `fix` 문제/BUG를 수정
+- `style` 코드 스타일 관련은 실행 결과에 영향을 주지 않습니다
+- `perf` 최적화/성능 향상
+- `refactor` 리팩터링
+- `revert` 변경 내용을 실행 취소
+- `test` 테스트 관련
+- `docs` 문서/주석
+- `chore` 업데이트/스캐폴드 구성 수정 등에 의존
+- `workflow` 워크플로 개선
+- `ci` 지속적인 통합
+- `mod` 분류의 수정이 확실하지 않음
+- `wip` 개발 중
+- `types` 형식 수정

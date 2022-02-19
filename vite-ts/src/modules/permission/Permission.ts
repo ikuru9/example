@@ -1,0 +1,136 @@
+import type { RouteLocation } from 'vue-router'
+import type { ActionType, Policies, Policy, RoleType } from './types'
+import { Action, Role } from './types'
+import DEFAULT_POLICES from './DefaultPolices'
+
+export interface IPermission {
+  setPolicies(policies: Policies): void
+  getPermission(route: RouteLocation, roleTypes: RoleType[]): Policy | undefined
+  hasActionPermission(
+    route: RouteLocation,
+    roleTypes: RoleType[],
+    action: ActionType | string
+  ): boolean
+}
+
+/**
+ * 권한 관리
+ *
+ * route name 를 key로 사용하여 권한을 관리
+ * redirect url 은 @/pages/* components 에 설정
+ */
+export default class Permission implements IPermission {
+  protected policies: Policies
+
+  constructor(policies: Policies = DEFAULT_POLICES) {
+    this.policies = policies
+  }
+
+  /**
+   * 권한 정책 설정
+   * @param policies 권한 정책
+   */
+  public setPolicies(policies: Policies = DEFAULT_POLICES) {
+    this.policies = policies
+  }
+
+  /**
+   * 해당 route 의 권한 가져오기
+   * @param route
+   * @param roleTypes
+   * @returns
+   */
+  public getPermission(
+    route: RouteLocation,
+    roleTypes: RoleType[]
+  ): Policy | undefined {
+    if (this.isAdmin(roleTypes)) {
+      return {
+        actions: [Action.ALL],
+      }
+    }
+
+    return this.getPolicy(this.policies, route, roleTypes)
+  }
+
+  /**
+   * 해당 route 의 Action 권한 존재 유무
+   * @param route
+   * @param roleTypes
+   * @param action
+   * @returns
+   */
+  public hasActionPermission(
+    route: RouteLocation,
+    roleTypes: RoleType[],
+    action: ActionType | string
+  ): boolean {
+    if (this.isAdmin(roleTypes)) {
+      return true
+    }
+
+    const { actions, extraActions } = this.getPolicy(
+      this.policies,
+      route,
+      roleTypes
+    ) ?? { actions: undefined }
+
+    return (
+      actions?.includes(Action.ALL) ||
+      actions?.includes(Action[action as keyof typeof Action]) ||
+      extraActions?.includes(<string>action) ||
+      false
+    )
+  }
+
+  private getPolicy(
+    policies: Policies,
+    route: RouteLocation,
+    roleTypes: RoleType[],
+    sliceIndex = 0
+  ): Policy | undefined {
+    let result: Policy | undefined
+
+    const names = ((route.name as string) ?? '').split('-')
+    const nameSize = names.length - 1
+
+    names.slice(sliceIndex).some((name, index) => {
+      const policy = policies[name]
+
+      if (!policy) {
+        console.warn('No policy set.\n', `[Route Name]: ${name}`)
+        return false
+      }
+
+      if (
+        Object.keys(policy.rolePolicy).some((roleType) =>
+          roleTypes.includes(<RoleType>roleType)
+        )
+      ) {
+        const children = policy?.children
+        if (children && nameSize > index) {
+          result = this.getPolicy(children, route, roleTypes, index - 1)
+          return true
+        }
+        roleTypes.some((roleType) => {
+          result = policy.rolePolicy[roleType]
+          return !!result
+        })
+
+        return true
+      }
+
+      return false
+    })
+
+    return result
+  }
+
+  protected isAdmin(roleType: RoleType | RoleType[]): boolean {
+    if (Array.isArray(roleType)) {
+      return roleType.includes(Role.ADMIN)
+    } else {
+      return roleType === Role.ADMIN
+    }
+  }
+}

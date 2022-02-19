@@ -1,13 +1,9 @@
+<script setup lang="ts"></script>
+
 <template>
-  <RouterView v-slot="{ Component }">
-    <component :is="Component" />
-  </RouterView>
+  <router-view v-slot="{ Component, route }">
+    <transition name="slide">
+      <component :is="Component" :key="route" />
+    </transition>
+  </router-view>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'App',
-})
-</script>

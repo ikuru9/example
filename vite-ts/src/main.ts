@@ -1,28 +1,28 @@
-import App from '@/App.vue'
-import { createRouter } from '@/router'
-import { createStore, key } from '@/store'
-import { createApp as _createApp, createSSRApp } from 'vue'
+import { router, setupRouter } from '@/router'
+import { setupStore } from '@/store'
+import { createApp, createSSRApp } from 'vue'
 import { createMock } from '../mocks'
-import './style.css'
+
+import '@/styles/index.scss'
+import App from '@/App.vue'
+import { setupRouterGuards } from '@/router/guards'
 
 const isSSR = import.meta.env.SSR
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function createApp() {
-  const app = isSSR ? createSSRApp(App) : _createApp(App)
-  const router = createRouter()
-  const store = createStore()
+async function bootstrap() {
+  const app = isSSR ? createSSRApp(App) : createApp(App)
 
-  app.use(router)
-  app.use(store, key)
+  setupStore(app)
 
-  return { app, store, router }
+  setupRouter(app)
+
+  setupRouterGuards(router)
+
+  if (import.meta.env.VITE_USE_MOCK) {
+    await createMock(isSSR)
+  }
+
+  app.mount('#app')
 }
 
-if (import.meta.env.VITE_API_MOCKING === 'enabled') {
-  createMock(isSSR).then(() => {
-    createApp().app.mount('#app')
-  })
-} else {
-  createApp().app.mount('#app')
-}
+bootstrap()

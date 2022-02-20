@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { store } from '@/store'
+import { store } from '/@/store'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface AppState {

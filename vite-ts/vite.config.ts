@@ -30,8 +30,8 @@ export default function viteConfig({
     root,
     resolve: {
       alias: {
-        '@/': `${resolve(process.cwd(), 'src')}/`,
-        '#/': `${resolve(process.cwd(), 'types')}/`,
+        '/@/': `${resolve(process.cwd(), 'src')}/`,
+        '/#/': `${resolve(process.cwd(), 'types')}/`,
       },
     },
     server: {

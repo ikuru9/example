@@ -1,6 +1,6 @@
 <template>
   <svg
-    :class="[$attrs.class, { 'svg-icon-spin': spin }]"
+    :class="[prefixCls, $attrs.class, { 'svg-icon-spin': spin }]"
     :style="getStyle"
     aria-hidden="true"
   >
@@ -32,6 +32,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { prefixCls } = useDesign('svg-icon')
     const symbolId = computed(() => `#${props.prefix}-${props.name}`)
 
     const getStyle = computed((): CSSProperties => {
@@ -43,7 +44,7 @@ export default defineComponent({
         height: s,
       }
     })
-    return { symbolId, getStyle }
+    return { symbolId, prefixCls, getStyle }
   },
 })
 </script>

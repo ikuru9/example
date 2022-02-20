@@ -25,18 +25,24 @@
     "skipLibCheck": true,
     "removeComments": true,
     "paths": {
-      "@/*": [
+      "/@/*": [
         "src/*"
       ],
-      "#/*": [
+      "/#/*": [
         "types/*"
       ]
-    }
+    },
+    "types": [
+      "vite/client",
+      "vite-plugin-pages/client",
+      "vite-plugin-vue-layouts/client"
+    ]
   },
   "include": [
     "tests/**/*.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
+    "src/**/*.tsx",
     "src/**/*.vue",
     "types/**/*.d.ts",
     "types/**/*.ts",

@@ -1,11 +1,11 @@
-import { router, setupRouter } from '@/router'
-import { setupStore } from '@/store'
+import { router, setupRouter } from '/@/router'
+import { setupStore } from '/@/store'
 import { createApp, createSSRApp } from 'vue'
 import { createMock } from '../mocks'
 
 import '@/styles/index.scss'
-import App from '@/App.vue'
-import { setupRouterGuards } from '@/router/guards'
+import App from '/@/App.vue'
+import { setupRouterGuards } from '/@/router/guards'
 
 const isSSR = import.meta.env.SSR
 

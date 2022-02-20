@@ -1,9 +1,7 @@
-import 'vue-router'
-
 declare module '*.vue' {
   import { defineComponent } from 'vue'
-  const component: ReturnType<typeof defineComponent>
-  export default component
+  const Component: ReturnType<typeof defineComponent>
+  export default Component
 }
 
 declare module 'vue-router' {
@@ -11,3 +9,5 @@ declare module 'vue-router' {
     layout: string
   }
 }
+
+export {}

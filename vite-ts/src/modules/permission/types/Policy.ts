@@ -1,4 +1,4 @@
-import { ActionType, RoleType } from '../types'
+import type { ActionType, RoleType } from '../types'
 
 export interface Policy {
   actions: ActionType[]

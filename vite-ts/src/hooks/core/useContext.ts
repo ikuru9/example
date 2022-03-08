@@ -6,6 +6,8 @@ import {
   readonly as defineReadonly,
   // defineComponent,
   UnwrapRef,
+  UnwrapNestedRefs,
+  DeepReadonly,
 } from 'vue'
 
 export interface CreateContextOptions {
@@ -18,8 +20,8 @@ type ShallowUnwrap<T> = {
   [P in keyof T]: UnwrapRef<T[P]>
 }
 
-export function createContext<T>(
-  context: any,
+export function createContext<T extends object>(
+  context: T,
   key: InjectionKey<T> = Symbol(),
   options: CreateContextOptions = {}
 ) {
@@ -27,7 +29,13 @@ export function createContext<T>(
 
   const state = reactive(context)
   const provideData = readonly ? defineReadonly(state) : state
-  !createProvider && provide(key, native ? context : provideData)
+  if (!createProvider) {
+    provide<
+      | T
+      | UnwrapNestedRefs<T>
+      | DeepReadonly<UnwrapNestedRefs<UnwrapNestedRefs<T>>>
+    >(key, native ? context : provideData)
+  }
 
   return {
     state,
@@ -37,13 +45,13 @@ export function createContext<T>(
 export function useContext<T>(key: InjectionKey<T>, native?: boolean): T
 export function useContext<T>(
   key: InjectionKey<T>,
-  defaultValue?: any,
+  defaultValue?: T,
   native?: boolean
 ): T
 
 export function useContext<T>(
   key: InjectionKey<T> = Symbol(),
-  defaultValue?: any
+  defaultValue?: T
 ): ShallowUnwrap<T> {
-  return inject(key, defaultValue || {})
+  return inject<ShallowUnwrap<T>>(key, defaultValue as ShallowUnwrap<T>)
 }

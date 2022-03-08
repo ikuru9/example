@@ -21,8 +21,6 @@ export function useEventListener({
   isDebounce = true,
   wait = 80,
 }: UseEventParams): { removeEvent: RemoveEventFn } {
-  /* eslint-disable-next-line */
-  let remove: RemoveEventFn = () => {}
   const isAddRef = ref(false)
 
   if (el) {
@@ -52,10 +50,16 @@ export function useEventListener({
       { immediate: true }
     )
 
-    remove = () => {
+    const removeEvent = () => {
       removeEventListener(element.value)
       removeWatch()
     }
+
+    return {
+      removeEvent,
+    }
   }
-  return { removeEvent: remove }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  return { removeEvent: () => {} }
 }

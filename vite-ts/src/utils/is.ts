@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const toString = Object.prototype.toString
 
 export function is(val: unknown, type: string) {

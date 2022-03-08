@@ -1,6 +1,12 @@
-import { ComponentPublicInstance, DirectiveBinding, Plugin } from 'vue'
+import type { ActionType, RoleType, Policies } from './types'
+import type {
+  ComponentPublicInstance,
+  Directive,
+  DirectiveBinding,
+  Plugin,
+} from 'vue'
 import Permission, { IPermission } from './Permission'
-import { ActionType, RoleType } from './types'
+import { useUserStoreWithOut } from '/@/store/user'
 
 function checkPermission(
   el: HTMLElement,
@@ -10,9 +16,16 @@ function checkPermission(
   const { $permission, $route } = instance as ComponentPublicInstance
 
   if (value) {
-    const roles: RoleType[] = getters['user/roles']
+    const userStore = useUserStoreWithOut()
+    const roles: RoleType[] = userStore.getRoles
 
-    if (!$permission?.hasActionPermission($route, roles, value)) {
+    if (
+      !$permission?.hasActionPermission(
+        $route,
+        roles,
+        value as ActionType | string
+      )
+    ) {
       el.parentNode && el.parentNode.removeChild(el)
     }
   } else {
@@ -20,26 +33,32 @@ function checkPermission(
   }
 }
 
+export interface PermissionOptions {
+  defaultPolices: Policies
+}
+
 const permission: Plugin = {
-  install(app, options?) {
-    const permission = new Permission()
+  install(app, options: PermissionOptions) {
+    const permission = new Permission(options.defaultPolices)
     app.config.globalProperties.$permission = permission
 
-    app.directive('permission', {
+    const directive: Directive<HTMLElement, ActionType | string> = {
       mounted(el, binding) {
         checkPermission(el, binding)
       },
       updated(el, binding) {
         checkPermission(el, binding)
       },
-    })
+    }
+
+    app.directive('permission', directive)
   },
 }
 
 export default permission
 
-declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
+declare module 'vue' {
+  export interface ComponentCustomProperties {
     $permission: IPermission
   }
 }

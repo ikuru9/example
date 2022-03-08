@@ -6,4 +6,4 @@ export const Role = {
   GUEST: 'GUEST',
 } as const
 
-export type RoleType = Union<typeof Role>
+export type RoleType = typeof Role[keyof typeof Role]

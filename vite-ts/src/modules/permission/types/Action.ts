@@ -5,6 +5,6 @@ export const Action = {
   ALL: 'ALL',
   SAVE: 'SAVE',
   REMOVE: 'REMOVE',
-}
+} as const
 
-export type ActionType = Union<typeof Action>
+export type ActionType = typeof Action[keyof typeof Action]

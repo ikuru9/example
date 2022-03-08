@@ -19,12 +19,6 @@ declare global {
     readonly [key: string]: T
   }
 
-  declare type Union<T> = T extends { [k: string]: unknown }
-    ? ObjectUnion<T>
-    : T extends ReadonlyArray<any>
-    ? ArrayUnion<T>
-    : never
-
   interface ImportMetaEnv extends ViteEnv {
     readonly __: unknown
   }
@@ -46,6 +40,7 @@ declare global {
     readonly VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean
     readonly VITE_LEGACY: boolean
     readonly VITE_USE_IMAGEMIN: boolean
+    readonly VITE_USE_PWA: boolean
   }
 }
 

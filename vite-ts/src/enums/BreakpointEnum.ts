@@ -1,27 +1,27 @@
-export const SizeEnum: Readonly<Record<string, string>> = {
+export const SizeEnum = {
   XS: 'XS',
   SM: 'SM',
   MD: 'MD',
   LG: 'LG',
   XL: 'XL',
   XXL: 'XXL',
-}
+} as const
 
-export type SizeEnum = Union<typeof SizeEnum>
+export type SizeEnumType = typeof SizeEnum[keyof typeof SizeEnum]
 
-export const ScreenEnum: Readonly<Record<string, number>> = {
+export const ScreenEnum = {
   XS: 480,
   SM: 576,
   MD: 768,
   LG: 992,
   XL: 1200,
   XXL: 1600,
-}
+} as const
 
-export type ScreenEnum = Union<typeof ScreenEnum>
+export type ScreenEnumType = typeof ScreenEnum[keyof typeof ScreenEnum]
 
-export const ScreenMap: Readonly<Map<SizeEnum, number>> = new Map<
-  SizeEnum,
+export const ScreenMap: Readonly<Map<SizeEnumType, number>> = new Map<
+  SizeEnumType,
   number
 >()
 

@@ -1,7 +1,6 @@
 import type { RouteLocation } from 'vue-router'
 import type { ActionType, Policies, Policy, RoleType } from './types'
 import { Action, Role } from './types'
-import DEFAULT_POLICES from './DefaultPolices'
 
 export interface IPermission {
   setPolicies(policies: Policies): void
@@ -22,7 +21,7 @@ export interface IPermission {
 export default class Permission implements IPermission {
   protected policies: Policies
 
-  constructor(policies: Policies = DEFAULT_POLICES) {
+  constructor(policies: Policies) {
     this.policies = policies
   }
 
@@ -30,7 +29,7 @@ export default class Permission implements IPermission {
    * 권한 정책 설정
    * @param policies 권한 정책
    */
-  public setPolicies(policies: Policies = DEFAULT_POLICES) {
+  public setPolicies(policies: Policies) {
     this.policies = policies
   }
 

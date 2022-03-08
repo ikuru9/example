@@ -8,8 +8,9 @@ import { configHtmlPlugin } from './html'
 import { configCompressPlugin } from './compress'
 import { configStyleImportPlugin } from './styleImport'
 import { configVisualizerConfig } from './visualizer'
-import { configImageminPlugin } from './imagemin'
+import { configImageminPlugin } from './imageMin'
 import { configSvgIconsPlugin } from './svgSprite'
+import { configPwaConfig } from './pwa'
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const {
@@ -26,6 +27,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     vueSetupExtend(),
     Pages({
       routeBlockLang: 'yaml',
+      exclude: ['**/components/*.vue'],
     }),
     Layout(),
   ]
@@ -52,11 +54,14 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
 
     // rollup-plugin-gzip
     vitePlugins.push(
-      ...configCompressPlugin(
+      configCompressPlugin(
         VITE_BUILD_COMPRESS,
         VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
       )
     )
+
+    // vite-plugin-pwa
+    vitePlugins.push(configPwaConfig(viteEnv))
   }
 
   return vitePlugins

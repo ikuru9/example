@@ -1,3 +1,3 @@
-declare interface Fn<T = any, R = T> {
-  (...arg: T[]): R
-}
+type Fn = (...arg: unknown[]) => unknown | void
+
+type PromiseFn<T extends Fn> = (...args: Parameters<T>) => ReturnType<T>

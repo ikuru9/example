@@ -1,3 +1,5 @@
-type Fn = (...arg: unknown[]) => unknown | void
+type Fn = (...arg: unknown[] | undefined) => unknown | void
 
-type PromiseFn<T extends Fn> = (...args: Parameters<T>) => ReturnType<T>
+type PromiseFn<T extends Fn> = (
+  ...args: Parameters<T> | undefined
+) => ReturnType<T>

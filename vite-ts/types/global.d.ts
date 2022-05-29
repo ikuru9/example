@@ -14,8 +14,8 @@ declare global {
   }
 
   type Nullable<T> = T | null
-  type Recordable<T = any> = Record<string, T>
-  type ReadonlyRecordable<T = any> = {
+  type Recordable<T = unknown> = Record<string, T>
+  type ReadonlyRecordable<T = unknown> = {
     readonly [key: string]: T
   }
 

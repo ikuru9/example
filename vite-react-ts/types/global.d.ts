@@ -1,5 +1,5 @@
 declare global {
-  declare type __APP_INFO__ = {
+  type __APP_INFO__ = {
     pkg: {
       name: string
       version: string
@@ -13,9 +13,9 @@ declare global {
     -readonly [P in keyof T]: T[P]
   }
 
-  declare type Nullable<T> = T | null
-  declare type Recordable<T = any> = Record<string, T>
-  declare type ReadonlyRecordable<T = any> = {
+  type Nullable<T> = T | null
+  type Recordable<T = unknown> = Record<string, T>
+  type ReadonlyRecordable<T = unknown> = {
     readonly [key: string]: T
   }
 
@@ -27,7 +27,7 @@ declare global {
     readonly env: ImportMetaEnv
   }
 
-  declare interface ViteEnv {
+  interface ViteEnv {
     readonly VITE_PORT: number
     readonly VITE_USE_MOCK: boolean
     readonly VITE_PUBLIC_PATH: string

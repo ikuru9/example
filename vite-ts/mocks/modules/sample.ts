@@ -18,7 +18,7 @@ const Samples = [
 ]
 
 export default [
-  rest.get('/sample-api/v1/employees', (req, res, ctx) => {
+  rest.get('/sample-api/v1/employees', (_req, res, ctx) => {
     return res(ctx.json(Samples))
   }),
   rest.get('/sample-api/v1/employees/:userId', (req, res, ctx) => {

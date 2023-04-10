@@ -7,10 +7,7 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import pkg from '../../../package.json'
 import { GLOB_CONFIG_FILE_NAME } from '../../constant'
 
-export function configHtmlPlugin(
-  env: ViteEnv,
-  isBuild: boolean
-): PluginOption[] {
+export function configHtmlPlugin(env: ViteEnv, isBuild: boolean) {
   const { VITE_GLOB_APP_TITLE, VITE_PUBLIC_PATH } = env
 
   const path = VITE_PUBLIC_PATH.endsWith('/')
@@ -23,26 +20,25 @@ export function configHtmlPlugin(
     }-${new Date().getTime()}`
   }
 
-  const htmlPlugin = createHtmlPlugin({
+  const htmlPlugin: PluginOption[] = createHtmlPlugin({
     minify: isBuild,
-
     inject: {
       // Inject data into ejs template
       data: {
         title: VITE_GLOB_APP_TITLE,
-        tags: isBuild
-          ? [
-              {
-                tag: 'script',
-                attrs: {
-                  src: getAppConfigSrc(),
-                },
-              },
-            ]
-          : [],
       },
+      // Embed the generated app.config.js file
+      tags: isBuild
+        ? [
+            {
+              tag: 'script',
+              attrs: {
+                src: getAppConfigSrc(),
+              },
+            },
+          ]
+        : [],
     },
   })
-
   return htmlPlugin
 }

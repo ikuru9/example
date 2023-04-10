@@ -1,6 +1,4 @@
-import { StartReturnType } from 'msw/lib/types/setupWorker/glossary'
-
-export async function createMock(isSSR: boolean): Promise<StartReturnType> {
+export async function createMock(isSSR: boolean): Promise<void> {
   await import('../public/mockServiceWorker.js?worker')
 
   if (isSSR) {
@@ -12,7 +10,7 @@ export async function createMock(isSSR: boolean): Promise<StartReturnType> {
   } else {
     const worker = (await import('./browser')).worker
 
-    return worker.start({
+    worker.start({
       onUnhandledRequest: 'bypass',
     })
   }

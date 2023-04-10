@@ -1,4 +1,5 @@
-import type { ActionType, RoleType, Policies } from './types'
+import type { ActionType, Policies } from './types'
+import type { RoleEnum } from '/@/enums/roleEnum'
 import type {
   ComponentPublicInstance,
   Directive,
@@ -17,7 +18,7 @@ function checkPermission(
 
   if (value) {
     const userStore = useUserStoreWithOut()
-    const roles: RoleType[] = userStore.getRoles
+    const roles: RoleEnum[] = userStore.getRoles
 
     if (
       !$permission?.hasActionPermission(

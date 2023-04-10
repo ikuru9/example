@@ -4,7 +4,7 @@ import { useThrottleFn, useDebounceFn } from '@vueuse/core'
 
 export type RemoveEventFn = () => void
 export interface UseEventParams {
-  el?: Element | Ref<Element | undefined> | Window
+  el?: Element | Ref<Element | undefined> | Window | never
   name: string
   listener: EventListener
   options?: boolean | AddEventListenerOptions
@@ -21,6 +21,8 @@ export function useEventListener({
   isDebounce = true,
   wait = 80,
 }: UseEventParams): { removeEvent: RemoveEventFn } {
+  /* eslint-disable-next-line */
+  let remove: RemoveEventFn = () => {}
   const isAddRef = ref(false)
 
   if (el) {
@@ -50,16 +52,10 @@ export function useEventListener({
       { immediate: true }
     )
 
-    const removeEvent = () => {
+    remove = () => {
       removeEventListener(element.value)
       removeWatch()
     }
-
-    return {
-      removeEvent,
-    }
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  return { removeEvent: () => {} }
+  return { removeEvent: remove }
 }

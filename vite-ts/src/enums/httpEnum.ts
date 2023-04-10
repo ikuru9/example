@@ -1,35 +1,35 @@
 /**
  * @description: Request result set
  */
-export const RESULT_ENUM = {
+export const ResultEnum = {
   SUCCESS: 0,
-  ERROR: 1,
+  ERROR: -1,
   TIMEOUT: 401,
-  TYPE: 'success',
+  TYP: 'success',
 } as const
-export type RESULT_ENUM = typeof RESULT_ENUM[keyof typeof RESULT_ENUM]
+export type ResultEnum = typeof ResultEnum[keyof typeof ResultEnum]
 
 /**
  * @description: request method
  */
-export const METHOD_ENUM = {
+export const RequestEnum = {
   GET: 'GET',
   POST: 'POST',
   PUT: 'PUT',
   DELETE: 'DELETE',
-  FETCH: 'FETCH',
 } as const
-export type METHOD_ENUM = typeof METHOD_ENUM[keyof typeof METHOD_ENUM]
+export type RequestEnum = typeof RequestEnum[keyof typeof RequestEnum]
 
 /**
  * @description:  contentType
  */
-export const CONTENT_TYPE = {
+export const ContentTypeEnum = {
   // json
-  JSON: 'application/json;charset:UTF-8',
+  JSON: 'application/json;charset=UTF-8',
   // form-data qs
-  FORM_URLENCODED: 'application/x-www-form-urlencoded;charset:UTF-8',
+  FORM_URLENCODED: 'application/x-www-form-urlencoded;charset=UTF-8',
   // form-data  upload
-  FORM_DATA: 'multipart/form-data;charset:UTF-8',
+  FORM_DATA: 'multipart/form-data;charset=UTF-8',
 } as const
-export type CONTENT_TYPE = typeof CONTENT_TYPE[keyof typeof CONTENT_TYPE]
+export type ContentTypeEnum =
+  typeof ContentTypeEnum[keyof typeof ContentTypeEnum]

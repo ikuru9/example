@@ -1,18 +1,17 @@
-import type { SizeEnumType, ScreenEnumType } from '/@/enums/BreakpointEnum'
-import { SizeEnum, ScreenEnum, ScreenMap } from '/@/enums/BreakpointEnum'
 import { ref, computed, ComputedRef, unref } from 'vue'
 import { useEventListener } from '/@/hooks/event/useEventListener'
+import { ScreenMap, SizeEnum, ScreenEnum } from '/@/enums/breakpointEnum'
 
-let globalScreenRef: ComputedRef<SizeEnumType | undefined>
+let globalScreenRef: ComputedRef<SizeEnum | undefined>
 let globalWidthRef: ComputedRef<number>
 let globalRealWidthRef: ComputedRef<number>
 
 export interface CreateCallbackParams {
-  screen: ComputedRef<SizeEnumType | undefined>
+  screen: ComputedRef<SizeEnum | undefined>
   width: ComputedRef<number>
   realWidth: ComputedRef<number>
   screenEnum: typeof ScreenEnum
-  screenMap: Map<SizeEnumType, number>
+  screenMap: Map<SizeEnum, number>
   sizeEnum: typeof SizeEnum
 }
 
@@ -29,7 +28,7 @@ export function useBreakpoint() {
 export function createBreakpointListen(
   fn?: (opt: CreateCallbackParams) => void
 ) {
-  const screenRef = ref<SizeEnumType>()
+  const screenRef = ref<SizeEnum>(SizeEnum.XL)
   const realWidthRef = ref(window.innerWidth)
 
   function getWindowWidth() {
@@ -83,7 +82,6 @@ export function createBreakpointListen(
   }
 
   resizeFn()
-
   return {
     screenRef: globalScreenRef,
     screenEnum: ScreenEnum,

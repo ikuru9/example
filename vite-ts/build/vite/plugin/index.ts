@@ -1,16 +1,21 @@
 import type { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import legacy from '@vitejs/plugin-legacy'
 import Pages from 'vite-plugin-pages'
 import Layout from 'vite-plugin-vue-layouts'
-import legacy from '@vitejs/plugin-legacy'
+import purgeIcons from 'vite-plugin-purge-icons'
+import windiCSS from 'vite-plugin-windicss'
+import VitePluginCertificate from 'vite-plugin-mkcert'
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import { configHtmlPlugin } from './html'
+import { configPwaConfig } from './pwa'
 import { configCompressPlugin } from './compress'
 import { configStyleImportPlugin } from './styleImport'
 import { configVisualizerConfig } from './visualizer'
+import { configThemePlugin } from './theme'
 import { configImageminPlugin } from './imageMin'
 import { configSvgIconsPlugin } from './svgSprite'
-import { configPwaConfig } from './pwa'
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const {
@@ -23,6 +28,8 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const vitePlugins: (PluginOption | PluginOption[])[] = [
     // have to
     vue(),
+    // have to
+    vueJsx(),
     // support name
     vueSetupExtend(),
     Pages({
@@ -30,7 +37,11 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
       exclude: ['**/components/*.vue'],
     }),
     Layout(),
+    VitePluginCertificate(),
   ]
+
+  // vite-plugin-windicss
+  vitePlugins.push(windiCSS())
 
   // @vitejs/plugin-legacy
   VITE_LEGACY && isBuild && vitePlugins.push(legacy())
@@ -41,11 +52,18 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   // vite-plugin-svg-icons
   vitePlugins.push(configSvgIconsPlugin(isBuild))
 
+  // vite-plugin-purge-icons
+  vitePlugins.push(purgeIcons())
+
   // vite-plugin-style-import
   vitePlugins.push(configStyleImportPlugin(isBuild))
 
   // rollup-plugin-visualizer
   vitePlugins.push(configVisualizerConfig())
+
+  // TODO: https://github.com/vbenjs/vite-plugin-theme/issues/27
+  // vite-plugin-theme
+  // vitePlugins.push(configThemePlugin(isBuild))
 
   // The following plugins only work in the production environment
   if (isBuild) {

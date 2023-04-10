@@ -25,24 +25,21 @@ export function configHtmlPlugin(
 
   const htmlPlugin = createHtmlPlugin({
     minify: isBuild,
-
-    entry: 'src/main.tsx',
-
     inject: {
       // Inject data into ejs template
       data: {
         title: VITE_GLOB_APP_TITLE,
-        tags: isBuild
-          ? [
-              {
-                tag: 'script',
-                attrs: {
-                  src: getAppConfigSrc(),
-                },
-              },
-            ]
-          : [],
       },
+      tags: isBuild
+        ? [
+            {
+              tag: 'script',
+              attrs: {
+                src: getAppConfigSrc(),
+              },
+            },
+          ]
+        : [],
     },
   })
 

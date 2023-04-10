@@ -1,4 +1,5 @@
-import type { ActionType, RoleType } from '../types'
+import type { ActionType } from '../types'
+import type { RoleEnum } from '/@/enums/roleEnum'
 
 export interface Policy {
   actions: ActionType[]
@@ -6,7 +7,7 @@ export interface Policy {
   redirect?: string
 }
 
-type RolePolicy = Partial<Record<RoleType, Policy>>
+type RolePolicy = Partial<Record<RoleEnum, Policy>>
 
 export interface Policies {
   [key: string]: {

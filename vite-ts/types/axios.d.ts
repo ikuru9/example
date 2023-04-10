@@ -1,3 +1,12 @@
+import 'axios'
+
+declare module 'axios' {
+  export interface AxiosRequestConfig {
+    __retryCount__?: number
+    requestOptions?: RequestOptions
+  }
+}
+
 export type ErrorMessageMode = 'none' | 'modal' | 'message' | undefined
 
 export interface RequestOptions {
@@ -44,7 +53,7 @@ export interface Result<T = unknown> {
 // multipart/form-data: upload file
 export interface UploadFileParams {
   // Other parameters
-  data?: Recordable
+  data?: Recordable<string | Blob>
   // File parameter interface field name
   name?: string
   // file name

@@ -1,13 +1,14 @@
 import type { RouteLocation } from 'vue-router'
-import type { ActionType, Policies, Policy, RoleType } from './types'
-import { Action, Role } from './types'
+import type { ActionType, Policies, Policy } from './types'
+import { Action } from './types'
+import { RoleEnum } from '/@/enums/roleEnum'
 
 export interface IPermission {
   setPolicies(policies: Policies): void
-  getPermission(route: RouteLocation, roleTypes: RoleType[]): Policy | undefined
+  getPermission(route: RouteLocation, roleTypes: RoleEnum[]): Policy | undefined
   hasActionPermission(
     route: RouteLocation,
-    roleTypes: RoleType[],
+    roleTypes: RoleEnum[],
     action: ActionType | string
   ): boolean
 }
@@ -41,7 +42,7 @@ export default class Permission implements IPermission {
    */
   public getPermission(
     route: RouteLocation,
-    roleTypes: RoleType[]
+    roleTypes: RoleEnum[]
   ): Policy | undefined {
     if (this.isAdmin(roleTypes)) {
       return {
@@ -61,7 +62,7 @@ export default class Permission implements IPermission {
    */
   public hasActionPermission(
     route: RouteLocation,
-    roleTypes: RoleType[],
+    roleTypes: RoleEnum[],
     action: ActionType | string
   ): boolean {
     if (this.isAdmin(roleTypes)) {
@@ -85,7 +86,7 @@ export default class Permission implements IPermission {
   private getPolicy(
     policies: Policies,
     route: RouteLocation,
-    roleTypes: RoleType[],
+    roleTypes: RoleEnum[],
     sliceIndex = 0
   ): Policy | undefined {
     let result: Policy | undefined
@@ -103,7 +104,7 @@ export default class Permission implements IPermission {
 
       if (
         Object.keys(policy.rolePolicy).some((roleType) =>
-          roleTypes.includes(<RoleType>roleType)
+          roleTypes.includes(<RoleEnum>roleType)
         )
       ) {
         const children = policy?.children
@@ -125,11 +126,11 @@ export default class Permission implements IPermission {
     return result
   }
 
-  protected isAdmin(roleType: RoleType | RoleType[]): boolean {
+  protected isAdmin(roleType: RoleEnum | RoleEnum[]): boolean {
     if (Array.isArray(roleType)) {
-      return roleType.includes(Role.ADMIN)
+      return roleType.includes(RoleEnum.ADMIN)
     } else {
-      return roleType === Role.ADMIN
+      return roleType === RoleEnum.ADMIN
     }
   }
 }

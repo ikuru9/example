@@ -1,3 +1,5 @@
+import type { VNodeChild, PropType as VuePropType } from 'vue'
+
 declare global {
   type __APP_INFO__ = {
     pkg: {
@@ -8,6 +10,10 @@ declare global {
     }
     lastBuildTime: string
   }
+
+  // vue
+  type PropType<T> = VuePropType<T>
+  type VueNode = VNodeChild | JSX.Element
 
   export type Writable<T> = {
     -readonly [P in keyof T]: T[P]

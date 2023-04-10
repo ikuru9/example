@@ -3,7 +3,7 @@
  * https://github.com/anncwb/vite-plugin-compression
  */
 import type { PluginOption } from 'vite'
-import viteCompression from 'vite-plugin-compression'
+import compressPlugin from 'vite-plugin-compression'
 
 export function configCompressPlugin(
   compress: 'gzip' | 'brotli' | 'none',
@@ -15,7 +15,7 @@ export function configCompressPlugin(
 
   if (compressList.includes('gzip')) {
     plugins.push(
-      viteCompression({
+      compressPlugin({
         ext: '.gz',
         deleteOriginFile,
       })
@@ -24,7 +24,7 @@ export function configCompressPlugin(
 
   if (compressList.includes('brotli')) {
     plugins.push(
-      viteCompression({
+      compressPlugin({
         ext: '.br',
         algorithm: 'brotliCompress',
         deleteOriginFile,

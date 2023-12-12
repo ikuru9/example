@@ -1,40 +1,25 @@
-/** @type {import('eslint').Linter.BaseConfig} **/
+/** @type {import('eslint').Linter.Config} **/
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier'],
-  parserOptions: {
-    project: './tsconfig.json',
-    createDefaultProgram: true
-  },
-  // 전역객체를 eslint가 인식하는 구간
-  env: {
-    browser: true, // document나 window 인식되게 함
-    node: true,
-    es6: true
-  },
-  // eslint 미적용될 폴더나 파일 명시
-  ignorePatterns: ['node_modules/'],
+  root: false,
   extends: [
-    'airbnb',
-    'airbnb-typescript',
-    'airbnb/hooks',
     'next/core-web-vitals',
-    'plugin:@typescript-eslint/recommended', // ts 권장
-    'plugin:prettier/recommended', // eslint의 포매팅을 prettier로 사용.
-    'prettier' // eslint-config-prettier prettier와 중복된 eslint 규칙 제거
+    'prettier',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+    'plugin:@tanstack/eslint-plugin-query/recommended'
   ],
   rules: {
-    // react 17부턴 import 안해도돼서 기능 끔
-    'react/react-in-jsx-scope': 'off',
-    // 경고표시, 파일 확장자를 .ts나 .tsx 모두 허용함
-    'react/jsx-filename-extension': [
-      'warn',
-      {
-        extensions: ['.ts', '.tsx']
-      }
-    ],
-    // 불필요한 catch 못쓰게 하는 기능 끔
-    'no-useless-catch': 'off',
-    'react/jsx-props-no-spreading': 'off'
+    '@typescript-eslint/no-explicit-any': 'warn'
+  },
+  settings: {
+    next: {
+      rootDir: 'packages/next-ts/'
+    }
+  },
+  ignorePatterns: ['node_modules', 'dist'],
+  parserOptions: {
+    babelOptions: {
+      presets: [require.resolve('next/babel')]
+    }
   }
-};
+}

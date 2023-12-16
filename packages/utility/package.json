@@ -2,8 +2,11 @@
   "name": "@example/utility",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "peerDependencies": {
     "vue": "^3",
-    "vue-router": "^4"
+    "vue-router": "^4",
+    "axios": "^1.6.2",
+    "memoize": "^10"
   }
 }

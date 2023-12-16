@@ -1,0 +1,9 @@
+{
+  "name": "@example/utility",
+  "version": "0.1.0",
+  "private": true,
+  "peerDependencies": {
+    "vue": "^3",
+    "vue-router": "^4"
+  }
+}

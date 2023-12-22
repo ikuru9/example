@@ -12,6 +12,7 @@
     "@biomejs/biome": "^1",
     "@commitlint/cli": "^18",
     "@commitlint/config-conventional": "^18",
+    "@types/node": "^20",
     "husky": "^8",
     "lint-staged": "^15",
     "typescript": "^5"

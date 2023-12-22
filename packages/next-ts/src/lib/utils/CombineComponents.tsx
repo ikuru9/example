@@ -1,8 +1,9 @@
 import { ComponentProps, ComponentType, FC } from 'react'
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 type Providers = [ComponentType<any>, ComponentProps<any>?][]
 
-const combineComponents = (providers: Providers): FC<React.PropsWithChildren> =>
+export const CombineComponents = (providers: Providers): FC<React.PropsWithChildren> =>
   providers.reduce(
     (AccumulatedProviders, [Provider, props = {}]) =>
       ({ children }) =>
@@ -13,5 +14,3 @@ const combineComponents = (providers: Providers): FC<React.PropsWithChildren> =>
         ),
     ({ children }) => <>{children}</>,
   )
-
-export default combineComponents

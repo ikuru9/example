@@ -1,4 +1,4 @@
-import getQueryClient from '@/utils/react-query/getQueryClient'
+import getQueryClient from '@/lib/utils/react-query/getQueryClient'
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 import { User } from './types'
 import ListUsers from './users'

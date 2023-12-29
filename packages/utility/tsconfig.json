@@ -12,7 +12,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "Bundler"
+    "moduleResolution": "Node16"
   },
   "include": ["src/**/*.ts", "types/**.d.ts"]
 }

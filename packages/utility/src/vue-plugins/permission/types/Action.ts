@@ -7,4 +7,4 @@ export const Action = {
   REMOVE: 'REMOVE',
 } as const
 
-export type ActionType = typeof Action[keyof typeof Action]
+export type ActionType = (typeof Action)[keyof typeof Action]

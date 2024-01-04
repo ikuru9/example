@@ -44,7 +44,7 @@ export default function UsersContainer() {
         >
           {data?.map((user) => (
             <div key={user.id} style={{ border: '1px solid #ccc', textAlign: 'center' }}>
-              <img
+              <Image
                 src={`https://robohash.org/${user.id}?set=set2&size=180x180`}
                 alt={user.name}
                 style={{ height: 180, width: 180 }}

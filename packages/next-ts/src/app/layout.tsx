@@ -1,7 +1,7 @@
+import { CombineComponents } from '@/components/combine-components'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { ThemeProvider } from '@/components/theme-provider'
 import { siteConfig } from '@/config/site'
-import { CombineComponents } from '@/lib/utils/CombineComponents'
 import { fontSans } from '@/lib/utils/font'
 import { ReactQueryProviders } from '@/lib/utils/react-query/Provider'
 import { cn } from '@/lib/utils/shadcn'

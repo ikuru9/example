@@ -1,7 +1,7 @@
 const path = require('path')
 
 const buildBiomeCommand = (filenames) =>
-  `pnpm dlx biome check --apply ${filenames.map((f) => path.relative(process.cwd(), f)).join(' ')}`
+  `pnpm dlx @biomejs/biome check --apply ${filenames.map((f) => path.relative(process.cwd(), f)).join(' ')}`
 
 module.exports = {
   '*.{js,jsx,ts,tsx}': [buildBiomeCommand],

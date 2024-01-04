@@ -3,4 +3,4 @@ export const RoleEnum = {
   GUEST: 'guest',
 } as const
 
-export type RoleEnum = typeof RoleEnum[keyof typeof RoleEnum]
+export type RoleEnum = (typeof RoleEnum)[keyof typeof RoleEnum]

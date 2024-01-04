@@ -1,12 +1,12 @@
+import { type CreateAxiosDefaults, default as _axios } from 'axios'
 import {
-  setupResponseInterceptor,
   type RefreshApiPromise,
-  type onResponse,
   type onError,
   onRequest,
+  type onResponse,
+  setupResponseInterceptor,
 } from './interceptor'
 import { Storage } from './storage'
-import { default as _axios, type CreateAxiosDefaults } from 'axios'
 
 export function createAxios(
   config: CreateAxiosDefaults,

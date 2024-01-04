@@ -1,4 +1,4 @@
-import type { AxiosResponse, AxiosPromise, AxiosInstance, InternalAxiosRequestConfig } from 'axios'
+import type { AxiosInstance, AxiosPromise, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import memoize from 'memoize'
 import { type Storage } from './storage'
 

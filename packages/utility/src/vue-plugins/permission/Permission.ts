@@ -1,7 +1,7 @@
 import type { RouteLocation } from 'vue-router'
+import { RoleEnum } from './enums/roleEnum'
 import type { ActionType, Policies, Policy } from './types'
 import { Action } from './types'
-import { RoleEnum } from './enums/roleEnum'
 
 export interface IPermission {
   setPolicies(policies: Policies): void

@@ -1,6 +1,6 @@
-import type { ActionType, Policies } from './types'
 import type { ComponentPublicInstance, Directive, DirectiveBinding, Plugin } from 'vue'
 import Permission, { IPermission } from './Permission'
+import type { ActionType, Policies } from './types'
 
 function checkPermission(el: HTMLElement, binding: DirectiveBinding<ActionType | string>) {
   const { value, instance } = binding

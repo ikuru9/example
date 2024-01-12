@@ -1,8 +1,7 @@
-import type { ActionType } from '.'
-import type { RoleEnum } from '../enums/roleEnum'
+import type { ActionEnum, RoleEnum } from '../enums'
 
 export interface Policy {
-  actions: ActionType[]
+  actions: ActionEnum[]
   extraActions?: string[]
   redirect?: string
 }

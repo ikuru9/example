@@ -1,24 +1,20 @@
 import { type CreateAxiosDefaults, default as _axios } from 'axios'
-import {
-  type RefreshApiPromise,
-  type onError,
-  onRequest,
-  type onResponse,
-  setupResponseInterceptor,
-} from './interceptor'
+import { setupInterceptor } from './interceptor'
 import { Storage } from './storage'
+import type { RefreshTokenReturnType, fnRefreshApi, onError, onRequest, onResponse } from './type'
 
-export function createAxios(
-  config: CreateAxiosDefaults,
-  getRefreshTokenApi: RefreshApiPromise,
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export function createAxios<Token extends RefreshTokenReturnType, T = any, D = any>(
+  config: CreateAxiosDefaults<D>,
+  fetchRefreshTokenApi: fnRefreshApi<Token>,
   storage: Storage,
-  onRequest: onRequest,
-  onResponse?: onResponse,
+  onRequest: onRequest<D>,
+  onResponse?: onResponse<T, D>,
   onError?: onError,
 ) {
   const axios = _axios.create(config)
 
-  setupResponseInterceptor(axios, getRefreshTokenApi, storage, onRequest, onResponse, onError)
+  setupInterceptor(axios, fetchRefreshTokenApi, storage, onRequest, onResponse, onError)
 
   return axios
 }

@@ -1,12 +1,11 @@
 import type { RouteLocation } from 'vue-router'
-import { RoleEnum } from './enums/roleEnum'
-import type { ActionType, Policies, Policy } from './types'
-import { Action } from './types'
+import { ActionEnum, RoleEnum } from './enums'
+import type { Policies, Policy } from './types'
 
 export interface IPermission {
   setPolicies(policies: Policies): void
   getPermission(route: RouteLocation, roleTypes: RoleEnum[]): Policy | undefined
-  hasActionPermission(route: RouteLocation, roleTypes: RoleEnum[], action: ActionType | string): boolean
+  hasActionPermission(route: RouteLocation, roleTypes: RoleEnum[], action: ActionEnum | string): boolean
 }
 
 /**
@@ -15,7 +14,7 @@ export interface IPermission {
  * route name 를 key로 사용하여 권한을 관리
  * redirect url 은 @/pages/* components 에 설정
  */
-export default class Permission implements IPermission {
+export class Permission implements IPermission {
   protected policies: Policies
 
   constructor(policies: Policies) {
@@ -36,10 +35,10 @@ export default class Permission implements IPermission {
    * @param roleTypes
    * @returns
    */
-  public getPermission(route: RouteLocation, roleTypes: RoleEnum[]): Policy | undefined {
+  public getPermission(route: RouteLocation, roleTypes: RoleEnum[]) {
     if (this.isAdmin(roleTypes)) {
       return {
-        actions: [Action.ALL],
+        actions: [ActionEnum.ALL],
       }
     }
 
@@ -53,7 +52,7 @@ export default class Permission implements IPermission {
    * @param action
    * @returns
    */
-  public hasActionPermission(route: RouteLocation, roleTypes: RoleEnum[], action: ActionType | string): boolean {
+  public hasActionPermission(route: RouteLocation, roleTypes: RoleEnum[], action: ActionEnum | string) {
     if (this.isAdmin(roleTypes)) {
       return true
     }
@@ -61,19 +60,14 @@ export default class Permission implements IPermission {
     const { actions, extraActions } = this.getPolicy(this.policies, route, roleTypes) ?? { actions: undefined }
 
     return (
-      actions?.includes(Action.ALL) ||
-      actions?.includes(Action[action as keyof typeof Action]) ||
+      actions?.includes(ActionEnum.ALL) ||
+      actions?.includes(ActionEnum[action as keyof typeof ActionEnum]) ||
       extraActions?.includes(<string>action) ||
       false
     )
   }
 
-  private getPolicy(
-    policies: Policies,
-    route: RouteLocation,
-    roleTypes: RoleEnum[],
-    sliceIndex = 0,
-  ): Policy | undefined {
+  private getPolicy(policies: Policies, route: RouteLocation, roleTypes: RoleEnum[], sliceIndex = 0) {
     let result: Policy | undefined
 
     const names = ((route.name as string) ?? '').split('-')
@@ -107,7 +101,7 @@ export default class Permission implements IPermission {
     return result
   }
 
-  protected isAdmin(roleType: RoleEnum | RoleEnum[]): boolean {
+  protected isAdmin(roleType: RoleEnum | RoleEnum[]) {
     if (Array.isArray(roleType)) {
       return roleType.includes(RoleEnum.ADMIN)
     }

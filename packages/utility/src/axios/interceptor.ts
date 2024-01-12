@@ -1,28 +1,14 @@
-import type { AxiosInstance, AxiosPromise, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
+import type { AxiosInstance } from 'axios'
 import memoize from 'memoize'
-import { type Storage } from './storage'
-
-export interface RefreshTokenReturnType {
-  accessToken: string
-  accessExpires: number
-  refreshToken: string
-  refreshExpires: number
-}
-
-export type RefreshApiPromise = () => AxiosPromise<RefreshTokenReturnType>
-
-export type onRequest = (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig
-export type onResponse = (response: AxiosResponse) => AxiosResponse
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export type onError = (error: any) => any
+import { Storage } from './storage'
+import type { RefreshTokenReturnType, fnRefreshApi, onError, onRequest, onResponse } from './type'
 
 const getRefreshToken = memoize(
-  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
-  async (getRefreshTokenApi: RefreshApiPromise, storage: Storage): Promise<string | void> => {
+  async <T extends RefreshTokenReturnType>(fetchRefreshTokenApi: fnRefreshApi<T>, storage: Storage) => {
     try {
       const {
         data: { accessToken, accessExpires, refreshToken, refreshExpires },
-      } = await getRefreshTokenApi()
+      } = await fetchRefreshTokenApi()
       storage.setAccessToken(accessToken, accessExpires)
 
       if (refreshToken !== null) {
@@ -38,9 +24,9 @@ const getRefreshToken = memoize(
   { maxAge: 1000 },
 )
 
-export function setupResponseInterceptor(
+export function setupInterceptor<T extends RefreshTokenReturnType>(
   axiosInstance: AxiosInstance,
-  getRefreshTokenApi: RefreshApiPromise,
+  fetchRefreshTokenApi: fnRefreshApi<T>,
   storage: Storage,
   onRequest?: onRequest,
   onResponse?: onResponse,
@@ -49,6 +35,7 @@ export function setupResponseInterceptor(
   if (onRequest) {
     axiosInstance.interceptors.request.use((config) => onRequest(config))
   }
+
   axiosInstance.interceptors.response.use(
     (res) => (onResponse ? onResponse(res) : res),
     async (err) => {
@@ -62,7 +49,7 @@ export function setupResponseInterceptor(
       }
 
       config._sent = true
-      const accessToken = await getRefreshToken(getRefreshTokenApi, storage)
+      const accessToken = await getRefreshToken(fetchRefreshTokenApi, storage)
 
       if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`

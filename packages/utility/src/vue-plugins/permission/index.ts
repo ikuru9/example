@@ -1,16 +1,17 @@
 import type { ComponentPublicInstance, Directive, DirectiveBinding, Plugin } from 'vue'
-import Permission, { IPermission } from './Permission'
-import type { ActionType, Policies } from './types'
+import { IPermission, Permission } from './Permission'
+import { type ActionEnum, RoleEnum } from './enums'
+import type { Policies } from './types'
 
-function checkPermission(el: HTMLElement, binding: DirectiveBinding<ActionType | string>) {
+function checkPermission(el: HTMLElement, binding: DirectiveBinding<ActionEnum | string>) {
   const { value, instance } = binding
   const { $permission, $route } = instance as ComponentPublicInstance
 
   if (value) {
     // TODO: Get user Roles
-    const roles = []
+    const roles: RoleEnum[] = []
 
-    if (!$permission?.hasActionPermission($route, roles, value as ActionType | string)) {
+    if (!$permission?.hasActionPermission($route, roles, value as ActionEnum | string)) {
       el.parentNode?.removeChild(el)
     }
   } else {
@@ -27,7 +28,7 @@ const permission: Plugin = {
     const permission = new Permission(options.defaultPolices)
     app.config.globalProperties.$permission = permission
 
-    const directive: Directive<HTMLElement, ActionType | string> = {
+    const directive: Directive<HTMLElement, ActionEnum | string> = {
       mounted(el, binding) {
         checkPermission(el, binding)
       },

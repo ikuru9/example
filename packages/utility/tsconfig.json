@@ -4,15 +4,14 @@
   "_version": "20.1.0",
 
   "compilerOptions": {
-    "lib": ["es2023"],
-    "module": "ESNext",
     "target": "ES5",
-
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "Node16"
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*.ts", "types/**.d.ts"]
 }

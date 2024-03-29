@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "peerDependencies": {
-    "vue": "^3",
-    "vue-router": "^4",
     "axios": "^1",
-    "memoize": "^10"
+    "mem": "^10",
+    "vue": "^3",
+    "vue-router": "^4"
   }
 }

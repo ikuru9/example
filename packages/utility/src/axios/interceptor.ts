@@ -1,10 +1,10 @@
 import type { AxiosInstance } from 'axios'
-import memoize from 'memoize'
-import { Storage } from './storage'
+import mem from 'mem'
+import { TokenStorage } from './token-storage'
 import type { RefreshTokenReturnType, fnRefreshApi, onError, onRequest, onResponse } from './type'
 
-const getRefreshToken = memoize(
-  async <T extends RefreshTokenReturnType>(fetchRefreshTokenApi: fnRefreshApi<T>, storage: Storage) => {
+const getRefreshToken = mem(
+  async <T extends RefreshTokenReturnType>(fetchRefreshTokenApi: fnRefreshApi<T>, storage: TokenStorage) => {
     try {
       const {
         data: { accessToken, accessExpires, refreshToken, refreshExpires },
@@ -27,7 +27,7 @@ const getRefreshToken = memoize(
 export function setupInterceptor<T extends RefreshTokenReturnType>(
   axiosInstance: AxiosInstance,
   fetchRefreshTokenApi: fnRefreshApi<T>,
-  storage: Storage,
+  storage: TokenStorage,
   onRequest?: onRequest,
   onResponse?: onResponse,
   onError?: onError,

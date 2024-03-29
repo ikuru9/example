@@ -1,4 +1,4 @@
-export interface Storage {
+export interface TokenStorage {
   setAccessToken(value: string, expires: number): void
   getAccessToken(): string | undefined
   removeAccessToken(): void

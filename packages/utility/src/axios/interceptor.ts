@@ -1,6 +1,6 @@
 import type { AxiosInstance } from 'axios'
 import mem from 'mem'
-import { TokenStorage } from './token-storage'
+import type { TokenStorage } from './token-storage'
 import type { RefreshTokenReturnType, fnRefreshApi, onError, onRequest, onResponse } from './type'
 
 const getRefreshToken = mem(
@@ -44,11 +44,11 @@ export function setupInterceptor<T extends RefreshTokenReturnType>(
         response: { status },
       } = err
 
-      if (status !== 401 || config._sent) {
+      if (status !== 401 || config._refresh_token_sent) {
         return Promise.reject(err)
       }
 
-      config._sent = true
+      config._refresh_token_sent = true
       const accessToken = await getRefreshToken(fetchRefreshTokenApi, storage)
 
       if (accessToken) {

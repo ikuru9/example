@@ -1,10 +1,16 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.6.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
   "organizeImports": {
     "enabled": true
   },
   "files": {
-    "ignore": ["node_modules", ".next", ".nuxt"]
+    "ignore": ["node_modules", ".next", ".nuxt", "public"]
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
   },
   "formatter": {
     "formatWithErrors": false,
@@ -13,6 +19,19 @@
     "lineWidth": 120,
     "lineEnding": "lf"
   },
+  "overrides": [
+    {
+      "include": ["*.svelte", "*.vue"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useConst": "off",
+            "useImportType": "off"
+          }
+        }
+      }
+    }
+  ],
   "linter": {
     "rules": {
       "recommended": true,

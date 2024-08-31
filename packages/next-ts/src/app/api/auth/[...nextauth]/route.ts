@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth/next'
 
-import { NextAuthOptions } from 'next-auth'
+import type { NextAuthOptions } from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials'
 
 const authOptions: NextAuthOptions = {
@@ -11,7 +11,7 @@ const authOptions: NextAuthOptions = {
         email: {
           label: 'Email',
           type: 'email',
-          placeholder: 'example@gmail.com',
+          placeholder: 'example@email.com',
         },
         password: {
           label: 'Password',

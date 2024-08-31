@@ -8,19 +8,19 @@
     "utility": "pnpm -F=@example/utility"
   },
   "dependencies": {
-    "lodash-es": "^4"
+    "es-toolkit": "^1"
   },
   "devDependencies": {
     "@biomejs/biome": "^1",
-    "@commitlint/cli": "^18",
-    "@commitlint/config-conventional": "^18",
+    "@commitlint/cli": "^19",
+    "@commitlint/config-conventional": "^19",
     "@types/node": "^20",
-    "husky": "^8",
+    "husky": "^9",
     "typescript": "^5"
   },
   "engines": {
-    "node": ">=20.11.0",
-    "pnpm": ">=8.14.0",
+    "node": ">=20.17.0",
+    "pnpm": ">=9.8.0",
     "npm": "please-use-pnpm",
     "yarn": "please-use-pnpm"
   },
@@ -33,8 +33,6 @@
       "biome format --write --no-errors-on-unmatched",
       "biome lint --apply --no-errors-on-unmatched"
     ],
-    "*": [
-      "biome check --no-errors-on-unmatched --files-ignore-unknown=true"
-    ]
+    "*": ["biome check --no-errors-on-unmatched --files-ignore-unknown=true"]
   }
 }

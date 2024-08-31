@@ -15,6 +15,15 @@ const defaultNextConfig = {
     // this includes files from the monorepo base two directories up
     outputFileTracingRoot: path.join(__dirname, '../../'),
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'robohash.org',
+        port: '',
+      },
+    ],
+  },
 }
 
 if (isProd) {

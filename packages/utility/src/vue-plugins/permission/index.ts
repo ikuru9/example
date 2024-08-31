@@ -1,6 +1,6 @@
 import type { ComponentPublicInstance, Directive, DirectiveBinding, Plugin } from 'vue'
-import { IPermission, Permission } from './Permission'
-import { type ActionEnum, RoleEnum } from './enums'
+import { Permission } from './Permission'
+import type { ActionEnum, RoleEnum } from './enums'
 import type { Policies } from './types'
 
 function checkPermission(el: HTMLElement, binding: DirectiveBinding<ActionEnum | string>) {

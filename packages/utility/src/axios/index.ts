@@ -1,7 +1,7 @@
 import type { CreateAxiosDefaults } from 'axios'
 import { default as _axios } from 'axios'
 import { setupInterceptor } from './interceptor'
-import { TokenStorage } from './token-storage'
+import type { TokenStorage } from './token-storage'
 import type { RefreshTokenReturnType, fnRefreshApi, onError, onRequest, onResponse } from './type'
 
 export function createAxios<

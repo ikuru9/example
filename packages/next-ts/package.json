@@ -25,6 +25,7 @@
     "zod": "^3"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@t3-oss/env-nextjs": "^0",
     "@tanstack/eslint-plugin-query": "^5",
     "@tanstack/react-query-devtools": "^5",

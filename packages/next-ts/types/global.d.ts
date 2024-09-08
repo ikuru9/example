@@ -11,5 +11,3 @@ declare global {
     interface ProcessEnv extends PrivateProcessEnv, PublicProcessEnv {}
   }
 }
-
-export type {}

@@ -18,8 +18,7 @@ export default async function Comments({ id }: Pick<Photo, 'id'>) {
           display: 'grid',
           gridTemplateColumns: '1fr',
           gap: 20,
-        }}
-      >
+        }}>
         {queries[1].state.data?.map((comment) => (
           <div key={comment.id}>{comment.body}</div>
         ))}

@@ -1,9 +1,9 @@
 import type { AxiosInstance } from 'axios'
-import mem from 'mem'
+import memoize from 'memoize'
 import type { TokenStorage } from './token-storage'
 import type { RefreshTokenReturnType, fnRefreshApi, onError, onRequest, onResponse } from './type'
 
-const getRefreshToken = mem(
+const getRefreshToken = memoize(
   async <T extends RefreshTokenReturnType>(fetchRefreshTokenApi: fnRefreshApi<T>, storage: TokenStorage) => {
     try {
       const {

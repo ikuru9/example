@@ -14,8 +14,7 @@ export default function UsersContainer() {
             display: 'grid',
             gridTemplateColumns: '1fr 1fr 1fr 1fr',
             gap: 20,
-          }}
-        >
+          }}>
           {data?.map((photo) => (
             <div key={photo.id} style={{ border: '1px solid #ccc', textAlign: 'center' }}>
               <Image src={photo.thumbnailUrl} alt={photo.title} width={180} height={180} />

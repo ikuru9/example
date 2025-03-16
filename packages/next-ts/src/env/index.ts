@@ -1,6 +1,6 @@
 // https://env.t3.gg/docs/nextjs
 
-import { VALIDATION_ERROR_MESSAGES } from '@/config/messages'
+import { message } from '@/config/messages'
 import { createEnv } from '@t3-oss/env-nextjs'
 import { type ZodError, z } from 'zod'
 
@@ -11,7 +11,7 @@ export const env = createEnv({
 
   client: {
     NEXT_PUBLIC_BASE_URL: z.string({
-      message: VALIDATION_ERROR_MESSAGES.required,
+      message: message.validation.required,
     }),
     NEXT_PUBLIC_API_MOCKING: z.enum(['enabled']).optional(),
   },

@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, Directive, DirectiveBinding, Plugin } from 'vue'
-import { Permission } from './Permission'
+import { type IPermission, Permission } from './Permission'
 import type { ActionEnum, RoleEnum } from './enums'
 import type { Policies } from './types'
 
@@ -23,7 +23,7 @@ export interface PermissionOptions {
   defaultPolices: Policies
 }
 
-const permission: Plugin = {
+const permission = {
   install(app, options: PermissionOptions) {
     const permission = new Permission(options.defaultPolices)
     app.config.globalProperties.$permission = permission
@@ -39,7 +39,7 @@ const permission: Plugin = {
 
     app.directive('permission', directive)
   },
-}
+} satisfies Plugin
 
 export default permission
 

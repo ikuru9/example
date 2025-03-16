@@ -5,7 +5,7 @@
   "type": "module",
   "peerDependencies": {
     "axios": "^1",
-    "mem": "^10",
+    "memoize": "^10",
     "vue": "^3",
     "vue-router": "^4",
     "query-string": "^9"

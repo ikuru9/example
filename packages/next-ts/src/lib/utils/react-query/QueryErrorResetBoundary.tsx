@@ -14,8 +14,7 @@ export default function ReactQueryErrorBoundary({ children }: React.PropsWithChi
                 Try again
               </button>
             </div>
-          )}
-        >
+          )}>
           {children}
         </ErrorBoundary>
       )}

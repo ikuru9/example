@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "postinstall": "husky install",
+    "prepare": "husky install",
     "next-ts": "pnpm -F=@example/next-ts",
-    "utility": "pnpm -F=@example/utility"
+    "vite-react": "pnpm -F=@example/vite-react",
+    "utility": "pnpm -F=@example/utility",
+    "lint": "biome check --write .",
+    "format": "biome format --write ."
   },
   "dependencies": {
     "es-toolkit": "^1"
@@ -19,8 +22,8 @@
     "typescript": "^5"
   },
   "engines": {
-    "node": ">=20.17.0",
-    "pnpm": ">=9.12.0",
+    "node": ">=22.14.0",
+    "pnpm": ">=10.6.0",
     "npm": "please-use-pnpm",
     "yarn": "please-use-pnpm"
   },
@@ -34,5 +37,8 @@
       "biome lint --apply --no-errors-on-unmatched"
     ],
     "*": ["biome check --no-errors-on-unmatched --files-ignore-unknown=true"]
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["@biomejs/biome", "esbuild", "msw", "sharp"]
   }
 }

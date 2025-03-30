@@ -5,14 +5,12 @@
   "scripts": {
     "prepare": "husky install",
     "next-ts": "pnpm -F=@example/next-ts",
-    "vite-react": "pnpm -F=@example/vite-react",
+    "tanstack-react": "pnpm -F=@example/tanstack-react",
     "utility": "pnpm -F=@example/utility",
     "lint": "biome check --write .",
     "format": "biome format --write ."
   },
-  "dependencies": {
-    "es-toolkit": "^1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@biomejs/biome": "^1",
     "@commitlint/cli": "^19",

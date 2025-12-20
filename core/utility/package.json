@@ -1,0 +1,13 @@
+{
+  "name": "@example/utility",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "peerDependencies": {
+    "axios": "^1",
+    "memoize": "^10",
+    "query-string": "^9",
+    "vue": "^3",
+    "vue-router": "^4"
+  }
+}

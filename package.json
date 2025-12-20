@@ -3,40 +3,46 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prepare": "husky install",
     "next-ts": "pnpm -F=@example/next-ts",
-    "tanstack-react": "pnpm -F=@example/tanstack-react",
+    "vite-react": "pnpm -F=@example/vite-react",
     "utility": "pnpm -F=@example/utility",
-    "lint": "biome check --write .",
-    "format": "biome format --write ."
+    "lint:staged": "oxlint",
+    "fmt:staged": "oxfmt --write",
+    "lint": "oxlint .",
+    "fmt": "oxfmt --write .",
+    "commit": "git-cz"
   },
-  "dependencies": {},
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  },
   "devDependencies": {
-    "@biomejs/biome": "^1",
-    "@commitlint/cli": "^19",
-    "@commitlint/config-conventional": "^19",
-    "@types/node": "^20",
-    "husky": "^9",
+    "@commitlint/cli": "^20",
+    "@commitlint/config-conventional": "^20",
+    "@commitlint/cz-commitlint": "^20",
+    "@commitlint/types": "^20",
+    "@types/node": "^24",
+    "commitizen": "^4",
+    "lefthook": "^2",
+    "oxfmt": "^0",
+    "oxlint": "^1",
     "typescript": "^5"
   },
   "engines": {
-    "node": ">=22.14.0",
-    "pnpm": ">=10.6.0",
+    "node": ">=24.12.0",
     "npm": "please-use-pnpm",
+    "pnpm": ">=10.26.2",
     "yarn": "please-use-pnpm"
   },
-  "lint-staged": {
-    "**.js|ts|cjs|mjs|d.cts|d.mts|jsx|tsx|json|jsonc": [
-      "biome check --files-ignore-unknown=true",
-      "biome check --apply --no-errors-on-unmatched",
-      "biome check --apply --organize-imports-enabled=true --no-errors-on-unmatched",
-      "biome check --apply-unsafe --no-errors-on-unmatched",
-      "biome format --write --no-errors-on-unmatched",
-      "biome lint --apply --no-errors-on-unmatched"
-    ],
-    "*": ["biome check --no-errors-on-unmatched --files-ignore-unknown=true"]
-  },
   "pnpm": {
-    "onlyBuiltDependencies": ["@biomejs/biome", "esbuild", "msw", "sharp"]
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "lefthook",
+      "msw",
+      "oxlint",
+      "sharp"
+    ]
   }
 }

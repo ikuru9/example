@@ -1,6 +1,6 @@
 {
   "recommendations": [
-    "biomejs.biome",
+    "oxc.oxc-vscode",
     "aaron-bond.better-comments",
     "streetsidesoftware.code-spell-checker",
     "gruntfuggly.todo-tree"

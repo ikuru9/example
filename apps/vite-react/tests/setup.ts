@@ -13,12 +13,12 @@ global.ResizeObserver = class ResizeObserver {
 };
 
 // Mock HTMLElement methods for Radix UI
-Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', {
+Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
   writable: true,
   value: vi.fn(),
 });
 
-Object.defineProperty(HTMLElement.prototype, 'getBoundingClientRect', {
+Object.defineProperty(HTMLElement.prototype, "getBoundingClientRect", {
   writable: true,
   value: () => ({
     width: 100,
@@ -33,9 +33,9 @@ Object.defineProperty(HTMLElement.prototype, 'getBoundingClientRect', {
   }),
 });
 
-Object.defineProperty(HTMLElement.prototype, 'getComputedStyle', {
+Object.defineProperty(HTMLElement.prototype, "getComputedStyle", {
   writable: true,
   value: () => ({
-    getPropertyValue: () => '100px',
+    getPropertyValue: () => "100px",
   }),
 });

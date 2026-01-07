@@ -88,8 +88,8 @@ In the File Based Routing setup the layout is located in `src/routes/__root.tsx`
 Here is an example layout that includes a header:
 
 ```tsx
-import { Outlet, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import { Outlet, createRootRoute } from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 import { Link } from "@tanstack/react-router";
 
@@ -106,7 +106,7 @@ export const Route = createRootRoute({
       <TanStackRouterDevtools />
     </>
   ),
-})
+});
 ```
 
 The `<TanStackRouterDevtools />` component is not required so you can remove it if you don't want it in your layout.
@@ -173,7 +173,7 @@ if (!rootElement.innerHTML) {
   root.render(
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-    </QueryClientProvider>
+    </QueryClientProvider>,
   );
 }
 ```
@@ -250,9 +250,7 @@ function App() {
   const count = useStore(countStore);
   return (
     <div>
-      <button onClick={() => countStore.setState((n) => n + 1)}>
-        Increment - {count}
-      </button>
+      <button onClick={() => countStore.setState((n) => n + 1)}>Increment - {count}</button>
     </div>
   );
 }
@@ -283,9 +281,7 @@ function App() {
 
   return (
     <div>
-      <button onClick={() => countStore.setState((n) => n + 1)}>
-        Increment - {count}
-      </button>
+      <button onClick={() => countStore.setState((n) => n + 1)}>Increment - {count}</button>
       <div>Doubled - {doubledCount}</div>
     </div>
   );

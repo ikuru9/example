@@ -19,6 +19,7 @@ example/
 ## 🚀 필수 명령어
 
 ### 워크스페이스 관리
+
 ```bash
 # 의존성 설치
 pnpm install
@@ -34,15 +35,17 @@ pnpm vite-react [command] # → pnpm -F=@example/vite-react
 ```
 
 ### 개발 서버
+
 ```bash
 # Next.js 앱 (포트 3000)
 pnpm next-ts dev
 
-# Vite React 앱 (포트 3000)  
+# Vite React 앱 (포트 3000)
 pnpm vite-react dev
 ```
 
 ### 빌드 및 테스트 명령어
+
 ```bash
 # Next.js
 pnpm next-ts build
@@ -56,6 +59,7 @@ pnpm vite-react test       # Vitest 테스트 실행
 ```
 
 ### 단일 테스트 파일 (Vite React)
+
 ```bash
 # 특정 테스트 파일 실행
 pnpm vite-react test Button.test.tsx
@@ -64,11 +68,12 @@ pnpm vite-react test Button.test.tsx --watch
 ```
 
 ### 코드 품질
+
 ```bash
 # 전체 저장소 린트
 pnpm lint
 
-# 전체 저장소 포맷팅  
+# 전체 저장소 포맷팅
 pnpm fmt
 
 # 스테이징된 파일만 린트 (커밋 전 실행)
@@ -79,16 +84,19 @@ pnpm fmt:staged
 ## 🔧 개발 도구
 
 ### Linting & Formatting
+
 - **Linter:** oxlint (fast, ESLint-compatible)
-- **Formatter:** oxfmt  
+- **Formatter:** oxfmt
 - **Git Hooks:** lefthook (auto lint/format on commit)
 
 ### Testing
+
 - **Vite React:** Vitest + @testing-library/react
 - **Test files:** `*.test.tsx` or `*.spec.tsx`
 - **Test location:** `tests/components/ui/` (mirrors source structure)
 
 ### TypeScript
+
 - **Version:** TypeScript 5 with `strict: true`
 - **Path Aliases:** `@/*` in both apps, `#/*` additional in Next.js
 - **Test files:** `any` types allowed in test files
@@ -96,8 +104,9 @@ pnpm fmt:staged
 ## 📝 커밋 규칙
 
 Use **conventional commits** (enforced by commitlint):
+
 - `feat:` - New features
-- `fix:` - Bug fixes  
+- `fix:` - Bug fixes
 - `refactor:` - Code refactoring
 - `style:` - Code style changes (no logic impact)
 - `test:` - Test additions/changes
@@ -127,8 +136,9 @@ Use **conventional commits** (enforced by commitlint):
 ## 🔍 검증 체크리스트
 
 Before completing any task:
+
 - [ ] `lsp_diagnostics` shows no errors on changed files
-- [ ] `pnpm lint` passes (if applicable)  
+- [ ] `pnpm lint` passes (if applicable)
 - [ ] Tests pass (if test changes made)
 - [ ] Build succeeds (if build changes made)
 - [ ] Following existing import/alias patterns

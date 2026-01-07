@@ -12,11 +12,6 @@
     "fmt": "oxfmt --write .",
     "commit": "git-cz"
   },
-  "config": {
-    "commitizen": {
-      "path": "@commitlint/cz-commitlint"
-    }
-  },
   "devDependencies": {
     "@commitlint/cli": "^20",
     "@commitlint/config-conventional": "^20",
@@ -28,6 +23,11 @@
     "oxfmt": "^0",
     "oxlint": "^1",
     "typescript": "^5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
   },
   "engines": {
     "node": ">=24.12.0",

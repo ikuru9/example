@@ -1,23 +1,20 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
-
-import * as TanStackQueryProvider from "./integrations/tanstack-query/root-provider.tsx";
 
 // Import the generated route tree
-import { routeTree } from "./.generated/routeTree.ts";
+import { routeTree } from "@/routeTree.gen.ts";
 
-import "./styles.css";
-import reportWebVitals from "./reportWebVitals.ts";
-import CombineComponents, {
-  type Provider,
-} from "./components/combine-components.tsx";
-import { ThemeProvider } from "./components/theme-provider.tsx";
+import * as TanStackQueryProvider from "./context/tanstack-query/root-provider.tsx";
+import { createRouter, RouterProvider } from "@tanstack/react-router";
+
+import "@/styles/index.css";
+import reportWebVitals from "@/reportWebVitals.ts";
+import { ThemeProvider } from "@/context/theme-provider.tsx";
+import { DirectionProvider } from "@/context/direction-provider.tsx";
 
 // Create a new router instance
-
 const TanStackQueryProviderContext = TanStackQueryProvider.getContext();
-const router = createRouter({
+export const router = createRouter({
   routeTree,
   context: {
     ...TanStackQueryProviderContext,
@@ -40,15 +37,15 @@ const rootElement = document.getElementById("app");
 if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
 
-  const providers: Provider[] = [
-    [TanStackQueryProvider.Provider, { ...TanStackQueryProviderContext }],
-    [RouterProvider, { router }],
-    [ThemeProvider, { defaultTheme: "system", storageKey: "vite-ui-theme" }],
-  ];
-
   root.render(
     <StrictMode>
-      <CombineComponents providers={providers} />
+      <TanStackQueryProvider.Provider {...TanStackQueryProviderContext}>
+        <ThemeProvider>
+          <DirectionProvider>
+            <RouterProvider router={router} />
+          </DirectionProvider>
+        </ThemeProvider>
+      </TanStackQueryProvider.Provider>
     </StrictMode>,
   );
 }

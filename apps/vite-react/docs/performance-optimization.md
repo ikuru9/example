@@ -3,9 +3,9 @@
 ## 코드 스플리팅
 
 ```tsx
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense } from "react";
 
-const LazyComponent = lazy(() => import('./LazyComponent'));
+const LazyComponent = lazy(() => import("./LazyComponent"));
 
 function App() {
   return (
@@ -19,20 +19,23 @@ function App() {
 ## 메모리 최적화
 
 ```tsx
-import { memo, useMemo, useCallback } from 'react';
+import { memo, useMemo, useCallback } from "react";
 
 const ExpensiveComponent = memo(({ data, onUpdate }) => {
   const processedData = useMemo(() => {
-    return data.map(item => ({ ...item, processed: true }));
+    return data.map((item) => ({ ...item, processed: true }));
   }, [data]);
 
-  const handleUpdate = useCallback((id) => {
-    onUpdate(id);
-  }, [onUpdate]);
+  const handleUpdate = useCallback(
+    (id) => {
+      onUpdate(id);
+    },
+    [onUpdate],
+  );
 
   return (
     <div>
-      {processedData.map(item => (
+      {processedData.map((item) => (
         <div key={item.id} onClick={() => handleUpdate(item.id)}>
           {item.name}
         </div>

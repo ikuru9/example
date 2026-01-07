@@ -48,8 +48,8 @@ vite-react/
 ```
 
 ## 개발 가이드라인
+
 - [개발 가이드라인](./docs/development-guidelines.md)
-- [테스트 전략](./docs/testing-strategy.md)
 - [성능 최적화](./docs/performance-optimization.md)
 - [커밋 규칙](./docs/commit-rules.md)
 - [배포 설정](./docs/deployment-configuration.md)

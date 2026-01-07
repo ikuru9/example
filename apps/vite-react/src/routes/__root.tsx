@@ -9,6 +9,7 @@ import { NavigationProgress } from "@/components/navigation-progress";
 import { Toaster } from "sonner";
 import { NotFoundError } from "@/components/errors/not-found-error";
 import { GeneralError } from "@/components/errors/general-error";
+import { DialogWrapper } from "@/components/dialogs/dialog-wrapper";
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -20,6 +21,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       <NavigationProgress />
       <Outlet />
       <Toaster duration={5000} />
+      <DialogWrapper />
       {import.meta.env.MODE === "development" && (
         <TanStackDevtools
           config={{

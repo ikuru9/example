@@ -52,5 +52,10 @@
     "vite": "^7",
     "vitest": "^4",
     "web-vitals": "^5.1.0"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

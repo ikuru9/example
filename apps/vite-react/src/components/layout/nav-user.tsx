@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "lucide-react";
-import useDialogState from "@/hooks/use-dialog-state";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -18,7 +17,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { SignOutDialog } from "@/components/sign-out-dialog";
+import SignOutButton from "../sign-out-button";
 
 type NavUserProps = {
   user: {
@@ -30,7 +29,6 @@ type NavUserProps = {
 
 export function NavUser({ user }: NavUserProps) {
   const { isMobile } = useSidebar();
-  const [open, setOpen] = useDialogState();
 
   return (
     <>
@@ -104,17 +102,15 @@ export function NavUser({ user }: NavUserProps) {
                   />
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem variant="destructive" onClick={() => setOpen(true)}>
+                <DropdownMenuItem variant="destructive">
                   <LogOut />
-                  Sign out
+                  <SignOutButton />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenuPositioner>
           </DropdownMenu>
         </SidebarMenuItem>
       </SidebarMenu>
-
-      <SignOutDialog open={!!open} onOpenChange={setOpen} />
     </>
   );
 }

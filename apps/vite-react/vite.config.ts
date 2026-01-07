@@ -23,13 +23,13 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    exclude: ["src/mocks/**"],
+    exclude: ["mocks"],
   },
   build: {
     rollupOptions: {
       external: (id) => {
         // Exclude mocks folder from production build
-        return id.includes("src/mocks");
+        return id.includes("mocks");
       },
     },
   },

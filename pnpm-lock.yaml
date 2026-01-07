@@ -226,6 +226,9 @@ importers:
       jsdom:
         specifier: ^27.0.0
         version: 27.4.0
+      msw:
+        specifier: ^2.12.7
+        version: 2.12.7(@types/node@24.10.4)(typescript@5.9.3)
       typescript:
         specifier: ^5
         version: 5.9.3

@@ -4,6 +4,12 @@ import ReactDOM from "react-dom/client";
 // Import the generated route tree
 import { routeTree } from "@/routeTree.gen.ts";
 
+// MSW setup
+if (import.meta.env.DEV) {
+  const { worker } = await import("@/mocks/browser");
+  await worker.start();
+}
+
 import * as TanStackQueryProvider from "./context/tanstack-query/root-provider.tsx";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 

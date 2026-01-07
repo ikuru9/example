@@ -22,4 +22,15 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  optimizeDeps: {
+    exclude: ["src/mocks/**"],
+  },
+  build: {
+    rollupOptions: {
+      external: (id) => {
+        // Exclude mocks folder from production build
+        return id.includes("src/mocks");
+      },
+    },
+  },
 });

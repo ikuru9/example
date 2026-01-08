@@ -1,0 +1,97 @@
+"use client";
+
+import * as React from "react";
+import { CalendarIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  PopoverPositioner,
+} from "@/components/ui/popover";
+import { formatDate } from "@/lib/format";
+
+type DatePickerProps = {
+  value?: Date | null;
+  onChange?: (date: Date | null) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  min?: Date;
+  max?: Date;
+  className?: string;
+};
+
+function DatePicker({
+  value,
+  onChange,
+  placeholder = "Pick a date",
+  disabled = false,
+  min,
+  max,
+  className,
+}: DatePickerProps) {
+  const [open, setOpen] = React.useState(false);
+  const [inputValue, setInputValue] = React.useState(formatDate(value));
+
+  React.useEffect(() => {
+    setInputValue(formatDate(value));
+  }, [value]);
+
+  const handleSelect = (date: Date | undefined) => {
+    onChange?.(date ?? null);
+    setOpen(false);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+
+    const parsedDate = new Date(newValue);
+    if (!isNaN(parsedDate.getTime())) {
+      if ((!min || parsedDate >= min) && (!max || parsedDate <= max)) {
+        onChange?.(parsedDate);
+      }
+    } else if (newValue === "") {
+      onChange?.(null);
+    }
+  };
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger>
+        <div className="relative w-full">
+          <Input
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder={placeholder}
+            disabled={disabled}
+            mask="datetime"
+            maskOptions={{ inputFormat: "yyyy-mm-dd" }}
+            className={cn("pr-10", !value && "text-muted-foreground", className)}
+          />
+          <CalendarIcon className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+        </div>
+      </PopoverTrigger>
+      <PopoverPositioner>
+        <PopoverContent className="w-auto p-0">
+          <Calendar
+            mode="single"
+            selected={value ?? undefined}
+            onSelect={handleSelect}
+            disabled={(date) => {
+              if (min && date < min) return true;
+              if (max && date > max) return true;
+              return false;
+            }}
+          />
+        </PopoverContent>
+      </PopoverPositioner>
+    </Popover>
+  );
+}
+
+export { DatePicker };

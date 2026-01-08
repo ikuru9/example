@@ -20,15 +20,17 @@
 
 ```tree
 vite-react/
-├── public/                 # 정적 에셋
+├── public/                # 정적 에셋
 │   ├── favicon.ico
 │   ├── robots.txt
 ├── src/
+│   ├── assets/            # 정적 에셋
 │   ├── components/        # 재사용 컴포넌트
 │   │   └── ui/            # UI 컴포넌트
 │   ├── routes/            # Tanstack Router 페이지 컴포넌트
 │   ├── hooks/             # 커스텀 훅
 │   ├── store/             # 상태 관리
+│   ├── features/          # Feature-specific logic and components (could be feature folders)
 │   ├── services/          # API 서비스
 │   ├── lib/               # 유틸리티 함수
 │   ├── types/             # TypeScript 타입 정의

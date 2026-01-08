@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from "./routes/__root";
+import { Route as AuthenticatedRouteRouteImport } from "./routes/_authenticated/route";
+import { Route as AuthenticatedIndexRouteImport } from "./routes/_authenticated/index";
 import { Route as errors503RouteImport } from "./routes/(errors)/503";
 import { Route as errors500RouteImport } from "./routes/(errors)/500";
 import { Route as errors404RouteImport } from "./routes/(errors)/404";
@@ -17,8 +19,23 @@ import { Route as errors401RouteImport } from "./routes/(errors)/401";
 import { Route as authSignUpRouteImport } from "./routes/(auth)/sign-up";
 import { Route as authSignInRouteImport } from "./routes/(auth)/sign-in";
 import { Route as authForgotPasswordRouteImport } from "./routes/(auth)/forgot-password";
+import { Route as AuthenticatedSettingsRouteRouteImport } from "./routes/_authenticated/settings/route";
+import { Route as AuthenticatedSettingsIndexRouteImport } from "./routes/_authenticated/settings/index";
+import { Route as AuthenticatedSettingsNotificationsRouteImport } from "./routes/_authenticated/settings/notifications";
+import { Route as AuthenticatedSettingsDisplayRouteImport } from "./routes/_authenticated/settings/display";
+import { Route as AuthenticatedSettingsAppearanceRouteImport } from "./routes/_authenticated/settings/appearance";
+import { Route as AuthenticatedSettingsAccountRouteImport } from "./routes/_authenticated/settings/account";
 import { Route as AuthenticatedErrorsErrorRouteImport } from "./routes/_authenticated/errors/$error";
 
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: "/_authenticated",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any);
 const errors503Route = errors503RouteImport.update({
   id: "/(errors)/503",
   path: "/503",
@@ -59,13 +76,45 @@ const authForgotPasswordRoute = authForgotPasswordRouteImport.update({
   path: "/forgot-password",
   getParentRoute: () => rootRouteImport,
 } as any);
+const AuthenticatedSettingsRouteRoute = AuthenticatedSettingsRouteRouteImport.update({
+  id: "/settings",
+  path: "/settings",
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any);
+const AuthenticatedSettingsIndexRoute = AuthenticatedSettingsIndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => AuthenticatedSettingsRouteRoute,
+} as any);
+const AuthenticatedSettingsNotificationsRoute =
+  AuthenticatedSettingsNotificationsRouteImport.update({
+    id: "/notifications",
+    path: "/notifications",
+    getParentRoute: () => AuthenticatedSettingsRouteRoute,
+  } as any);
+const AuthenticatedSettingsDisplayRoute = AuthenticatedSettingsDisplayRouteImport.update({
+  id: "/display",
+  path: "/display",
+  getParentRoute: () => AuthenticatedSettingsRouteRoute,
+} as any);
+const AuthenticatedSettingsAppearanceRoute = AuthenticatedSettingsAppearanceRouteImport.update({
+  id: "/appearance",
+  path: "/appearance",
+  getParentRoute: () => AuthenticatedSettingsRouteRoute,
+} as any);
+const AuthenticatedSettingsAccountRoute = AuthenticatedSettingsAccountRouteImport.update({
+  id: "/account",
+  path: "/account",
+  getParentRoute: () => AuthenticatedSettingsRouteRoute,
+} as any);
 const AuthenticatedErrorsErrorRoute = AuthenticatedErrorsErrorRouteImport.update({
-  id: "/_authenticated/errors/$error",
+  id: "/errors/$error",
   path: "/errors/$error",
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any);
 
 export interface FileRoutesByFullPath {
+  "/settings": typeof AuthenticatedSettingsRouteRouteWithChildren;
   "/forgot-password": typeof authForgotPasswordRoute;
   "/sign-in": typeof authSignInRoute;
   "/sign-up": typeof authSignUpRoute;
@@ -74,7 +123,13 @@ export interface FileRoutesByFullPath {
   "/404": typeof errors404Route;
   "/500": typeof errors500Route;
   "/503": typeof errors503Route;
+  "/": typeof AuthenticatedIndexRoute;
   "/errors/$error": typeof AuthenticatedErrorsErrorRoute;
+  "/settings/account": typeof AuthenticatedSettingsAccountRoute;
+  "/settings/appearance": typeof AuthenticatedSettingsAppearanceRoute;
+  "/settings/display": typeof AuthenticatedSettingsDisplayRoute;
+  "/settings/notifications": typeof AuthenticatedSettingsNotificationsRoute;
+  "/settings/": typeof AuthenticatedSettingsIndexRoute;
 }
 export interface FileRoutesByTo {
   "/forgot-password": typeof authForgotPasswordRoute;
@@ -85,10 +140,18 @@ export interface FileRoutesByTo {
   "/404": typeof errors404Route;
   "/500": typeof errors500Route;
   "/503": typeof errors503Route;
+  "/": typeof AuthenticatedIndexRoute;
   "/errors/$error": typeof AuthenticatedErrorsErrorRoute;
+  "/settings/account": typeof AuthenticatedSettingsAccountRoute;
+  "/settings/appearance": typeof AuthenticatedSettingsAppearanceRoute;
+  "/settings/display": typeof AuthenticatedSettingsDisplayRoute;
+  "/settings/notifications": typeof AuthenticatedSettingsNotificationsRoute;
+  "/settings": typeof AuthenticatedSettingsIndexRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
+  "/_authenticated": typeof AuthenticatedRouteRouteWithChildren;
+  "/_authenticated/settings": typeof AuthenticatedSettingsRouteRouteWithChildren;
   "/(auth)/forgot-password": typeof authForgotPasswordRoute;
   "/(auth)/sign-in": typeof authSignInRoute;
   "/(auth)/sign-up": typeof authSignUpRoute;
@@ -97,11 +160,18 @@ export interface FileRoutesById {
   "/(errors)/404": typeof errors404Route;
   "/(errors)/500": typeof errors500Route;
   "/(errors)/503": typeof errors503Route;
+  "/_authenticated/": typeof AuthenticatedIndexRoute;
   "/_authenticated/errors/$error": typeof AuthenticatedErrorsErrorRoute;
+  "/_authenticated/settings/account": typeof AuthenticatedSettingsAccountRoute;
+  "/_authenticated/settings/appearance": typeof AuthenticatedSettingsAppearanceRoute;
+  "/_authenticated/settings/display": typeof AuthenticatedSettingsDisplayRoute;
+  "/_authenticated/settings/notifications": typeof AuthenticatedSettingsNotificationsRoute;
+  "/_authenticated/settings/": typeof AuthenticatedSettingsIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
+    | "/settings"
     | "/forgot-password"
     | "/sign-in"
     | "/sign-up"
@@ -110,7 +180,13 @@ export interface FileRouteTypes {
     | "/404"
     | "/500"
     | "/503"
-    | "/errors/$error";
+    | "/"
+    | "/errors/$error"
+    | "/settings/account"
+    | "/settings/appearance"
+    | "/settings/display"
+    | "/settings/notifications"
+    | "/settings/";
   fileRoutesByTo: FileRoutesByTo;
   to:
     | "/forgot-password"
@@ -121,9 +197,17 @@ export interface FileRouteTypes {
     | "/404"
     | "/500"
     | "/503"
-    | "/errors/$error";
+    | "/"
+    | "/errors/$error"
+    | "/settings/account"
+    | "/settings/appearance"
+    | "/settings/display"
+    | "/settings/notifications"
+    | "/settings";
   id:
     | "__root__"
+    | "/_authenticated"
+    | "/_authenticated/settings"
     | "/(auth)/forgot-password"
     | "/(auth)/sign-in"
     | "/(auth)/sign-up"
@@ -132,10 +216,17 @@ export interface FileRouteTypes {
     | "/(errors)/404"
     | "/(errors)/500"
     | "/(errors)/503"
-    | "/_authenticated/errors/$error";
+    | "/_authenticated/"
+    | "/_authenticated/errors/$error"
+    | "/_authenticated/settings/account"
+    | "/_authenticated/settings/appearance"
+    | "/_authenticated/settings/display"
+    | "/_authenticated/settings/notifications"
+    | "/_authenticated/settings/";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren;
   authForgotPasswordRoute: typeof authForgotPasswordRoute;
   authSignInRoute: typeof authSignInRoute;
   authSignUpRoute: typeof authSignUpRoute;
@@ -144,11 +235,24 @@ export interface RootRouteChildren {
   errors404Route: typeof errors404Route;
   errors500Route: typeof errors500Route;
   errors503Route: typeof errors503Route;
-  AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute;
 }
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
+    "/_authenticated": {
+      id: "/_authenticated";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_authenticated/": {
+      id: "/_authenticated/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport;
+      parentRoute: typeof AuthenticatedRouteRoute;
+    };
     "/(errors)/503": {
       id: "/(errors)/503";
       path: "/503";
@@ -205,17 +309,95 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof authForgotPasswordRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    "/_authenticated/settings": {
+      id: "/_authenticated/settings";
+      path: "/settings";
+      fullPath: "/settings";
+      preLoaderRoute: typeof AuthenticatedSettingsRouteRouteImport;
+      parentRoute: typeof AuthenticatedRouteRoute;
+    };
+    "/_authenticated/settings/": {
+      id: "/_authenticated/settings/";
+      path: "/";
+      fullPath: "/settings/";
+      preLoaderRoute: typeof AuthenticatedSettingsIndexRouteImport;
+      parentRoute: typeof AuthenticatedSettingsRouteRoute;
+    };
+    "/_authenticated/settings/notifications": {
+      id: "/_authenticated/settings/notifications";
+      path: "/notifications";
+      fullPath: "/settings/notifications";
+      preLoaderRoute: typeof AuthenticatedSettingsNotificationsRouteImport;
+      parentRoute: typeof AuthenticatedSettingsRouteRoute;
+    };
+    "/_authenticated/settings/display": {
+      id: "/_authenticated/settings/display";
+      path: "/display";
+      fullPath: "/settings/display";
+      preLoaderRoute: typeof AuthenticatedSettingsDisplayRouteImport;
+      parentRoute: typeof AuthenticatedSettingsRouteRoute;
+    };
+    "/_authenticated/settings/appearance": {
+      id: "/_authenticated/settings/appearance";
+      path: "/appearance";
+      fullPath: "/settings/appearance";
+      preLoaderRoute: typeof AuthenticatedSettingsAppearanceRouteImport;
+      parentRoute: typeof AuthenticatedSettingsRouteRoute;
+    };
+    "/_authenticated/settings/account": {
+      id: "/_authenticated/settings/account";
+      path: "/account";
+      fullPath: "/settings/account";
+      preLoaderRoute: typeof AuthenticatedSettingsAccountRouteImport;
+      parentRoute: typeof AuthenticatedSettingsRouteRoute;
+    };
     "/_authenticated/errors/$error": {
       id: "/_authenticated/errors/$error";
       path: "/errors/$error";
       fullPath: "/errors/$error";
       preLoaderRoute: typeof AuthenticatedErrorsErrorRouteImport;
-      parentRoute: typeof rootRouteImport;
+      parentRoute: typeof AuthenticatedRouteRoute;
     };
   }
 }
 
+interface AuthenticatedSettingsRouteRouteChildren {
+  AuthenticatedSettingsAccountRoute: typeof AuthenticatedSettingsAccountRoute;
+  AuthenticatedSettingsAppearanceRoute: typeof AuthenticatedSettingsAppearanceRoute;
+  AuthenticatedSettingsDisplayRoute: typeof AuthenticatedSettingsDisplayRoute;
+  AuthenticatedSettingsNotificationsRoute: typeof AuthenticatedSettingsNotificationsRoute;
+  AuthenticatedSettingsIndexRoute: typeof AuthenticatedSettingsIndexRoute;
+}
+
+const AuthenticatedSettingsRouteRouteChildren: AuthenticatedSettingsRouteRouteChildren = {
+  AuthenticatedSettingsAccountRoute: AuthenticatedSettingsAccountRoute,
+  AuthenticatedSettingsAppearanceRoute: AuthenticatedSettingsAppearanceRoute,
+  AuthenticatedSettingsDisplayRoute: AuthenticatedSettingsDisplayRoute,
+  AuthenticatedSettingsNotificationsRoute: AuthenticatedSettingsNotificationsRoute,
+  AuthenticatedSettingsIndexRoute: AuthenticatedSettingsIndexRoute,
+};
+
+const AuthenticatedSettingsRouteRouteWithChildren =
+  AuthenticatedSettingsRouteRoute._addFileChildren(AuthenticatedSettingsRouteRouteChildren);
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren;
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute;
+  AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute;
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
+};
+
+const AuthenticatedRouteRouteWithChildren = AuthenticatedRouteRoute._addFileChildren(
+  AuthenticatedRouteRouteChildren,
+);
+
 const rootRouteChildren: RootRouteChildren = {
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   authForgotPasswordRoute: authForgotPasswordRoute,
   authSignInRoute: authSignInRoute,
   authSignUpRoute: authSignUpRoute,
@@ -224,7 +406,6 @@ const rootRouteChildren: RootRouteChildren = {
   errors404Route: errors404Route,
   errors500Route: errors500Route,
   errors503Route: errors503Route,
-  AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
